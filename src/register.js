@@ -1,4 +1,3 @@
-// REGISTER COMPONENT
 import React from 'react';
 import axios from 'axios';
 
@@ -7,6 +6,7 @@ export default class Registration extends React.Component {
         super(props);
         this.state = {};
         this.handleChange = this.handleChange.bind(this);
+        this.submit = this.submit.bind(this);
     }
     handleChange(e) {
         this[e.target.name] = e.target.value;
@@ -34,11 +34,11 @@ export default class Registration extends React.Component {
         return (
             <div className='registration'>
                 {this.state.error && <div className="error">Oops!</div>}
-                <input name="first"  placeholder="first" onChange={e => this.handleChange(e)} />
-                <input name="last" placeholder="first"/>
-                <input name="email" placeholder="first"/>
-                <input name="pass" placeholder="first"/>
-                <button>Submit</button>
+                <input name="first"  placeholder="first" onChange={this.handleChange} />
+                <input name="last" placeholder="last" onChange={this.handleChange}/>
+                <input name="email" placeholder="e-mail"onChange={this.handleChange}/>
+                <input name="pass" placeholder="*****"onChange={this.handleChange}/>
+                <button onClick={this.submit}>Submit</button>
             </div>
         )
     }

@@ -20,7 +20,7 @@ app.use(cookieSession({
     maxAge: 1000 * 60 * 60 * 24 * 14 // Cookies lasts 2 weeks
 }));
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 
 
@@ -34,32 +34,32 @@ if (process.env.NODE_ENV != 'production') {
     );
 } else {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
-}
-//////////////////////////////////////////////////
-/*app.post('/register', function(req, res) {
-    app.post("/register", (req, res) =>{
+};
+
+//REGISTER COMPONENT
+app.post('/register', function(req, res) {
         console.log("req.body:",req.body);
     // check the required fields
     // IF all fields are filed out, send data to database (table users), hash the password and redirect them to petition
     // database sends back the users ID as a cookie
         if (req.body.first && req.body.last && req.body.email && req.body.password){
-            hashPassword(req.body.password).then(hashedPassword =>{
-                db.register(req.body.first, req.body.last, req.body.email, hashedPassword).then(data => {
+            //hashPassword(req.body.password).then(hashedPassword =>{
+                db.register(req.body.first, req.body.last, req.body.email).then(data => {
                     req.session.id = data.rows[0].id;
                     req.session.first = req.body.first;
                     req.session.last = req.body.last;
                     req.session.email = req.body.email;
                     console.log('data =>: ', data);
-                    res.redirect("/profile");
+                    res.redirect("/");
                 }).catch ( err => {
                     console.log ("app.post register: ", err);}); 
             });  
         } else {
-            res.render('register', {
-                layout: "error",
-            });
-        }});*/
-//////////////////////////////////////////
+            res.render('register');
+        }});
+
+
+//WELCOME COMPONENT
 app.get('/welcome', function(req, res) {
     if (req.session.userId) {
         res.redirect('/');

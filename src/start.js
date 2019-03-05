@@ -9,7 +9,7 @@ let elem;
 if (location.pathname == '/welcome') {
     elem = <Welcome />
 } else {
-    elem = <img src="logo.png" />;
+    elem = <img src="kiez-logo.png" className='logoSmall' />;
 }
 
 ReactDOM.render(

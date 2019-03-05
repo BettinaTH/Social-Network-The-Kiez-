@@ -1,5 +1,18 @@
 body{
-    background-color: aquamarine
+    background-color: aquamarine;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+input{
+    padding: 2px;
+    margin: 3px;
+}
+button{
+    background-color:   aqua;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+#welcome{
+    display: flex;
+    justify-content: center;
 }
 .container{
     display: flex;
@@ -8,9 +21,17 @@ body{
 }
 .registration{
     background-color: aqua;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+
     
 }
 .logoBig{
 width: 300px;
 height: 300px;
+}
+.logoSmall{
+    width: 100px;
+    height:100px;
 }
