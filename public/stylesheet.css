@@ -1,0 +1,16 @@
+body{
+    background-color: aquamarine
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.registration{
+    background-color: aqua;
+    
+}
+.logoBig{
+width: 300px;
+height: 300px;
+}
