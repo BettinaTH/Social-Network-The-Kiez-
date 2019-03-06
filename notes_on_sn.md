@@ -24,3 +24,11 @@ after login the user gets to a pag with logo in the top left corner
 
  let elem
  on the client if location.pathname == '/welcome'
+
+ PART TWO
+ -everytime we use axios   we link to the file in src '/.axios' and not use axios from our module
+ - create a new component
+ - with error message
+ - route is welcome/#login
+ - routing with libarary
+ - tell React to switch the component if login or registration with import {login} to link to outher components

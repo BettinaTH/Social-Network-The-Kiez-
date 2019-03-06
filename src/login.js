@@ -2,7 +2,7 @@ import React from 'react';
 import axios from './axios';
 import { Link } from 'react-router-dom';
 
-export default class Registration extends React.Component {
+export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -16,9 +16,7 @@ export default class Registration extends React.Component {
         // });
     }
     submit(e) {
-        axios.post('/register', {
-            first: this.first,
-            last: this.last,
+        axios.post('/login', {
             email: this.email,
             password: this.password
         }).then(({data}) => {
@@ -35,12 +33,10 @@ export default class Registration extends React.Component {
         return (
             <div className='registration'>
                 {this.state.error && <div className="error">Oops!</div>}
-                <input name="first"  placeholder="first" onChange={this.handleChange} />
-                <input name="last" placeholder="last" onChange={this.handleChange}/>
                 <input name="email" placeholder="e-mail"onChange={this.handleChange}/>
-                <input name="password" type="password" placeholder="*****"onChange={this.handleChange}/>
+                <input type= "password" name="password" placeholder="*****"onChange={this.handleChange}/>
                 <button onClick={this.submit}>Submit</button>
-                <p>Already a profile? <Link to="/login">Click here to Log in!</Link></p>
+                <p>New at THE KIEZ? <Link to="/">Click here to register!</Link></p>
             </div>
         )
     }

@@ -6,7 +6,7 @@ const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const csurf = require('csurf');
 const db = require ('./db');
-//const hashPassword = require ('./auth.js').hashPassword;
+const hashPassword = require ('./auth.js').hashPassword;
 /// petition copy end
 
 app.use(compression());
@@ -21,6 +21,13 @@ app.use(cookieSession({
 }));
 
 app.use(bodyParser.json());
+
+app.use(csurf());
+
+app.use(function(req, res, next){
+    res.cookie('mytoken', req.csrfToken());
+    next();
+});
 
 
 
@@ -43,34 +50,75 @@ app.post('/register', function(req, res) {
     // IF all fields are filed out, send data to database (table users), hash the password and redirect them to petition
     // database sends back the users ID as a cookie
         if (req.body.first && req.body.last && req.body.email && req.body.password){
-            //hashPassword(req.body.password).then(hashedPassword =>{
-                db.register(req.body.first, req.body.last, req.body.email).then(data => {
+            hashPassword(req.body.password).then(hashedPassword =>{
+                db.register(req.body.first, req.body.last, req.body.email,hashedPassword).then(data => {
+                    console.log('id: ', data.rows[0].id);
                     req.session.id = data.rows[0].id;
+                    console.log('session id: ', req.session.id);
                     req.session.first = req.body.first;
                     req.session.last = req.body.last;
                     req.session.email = req.body.email;
                     console.log('data =>: ', data);
-                    res.redirect("/");
-                }).catch ( err => {
-                    console.log ("app.post register: ", err);}); 
-            });  
-        } else {
-            res.render('register');
-        }});
+                    res.json({success:true});
+                }).catch( err => {
+                    console.log ("app.post register: ", err);
+                    res.json({success:false})
+                });
+            })
+            } else {
+                res.json({success:false});
+            }
+})
+
+app.post("/login", function(req, res){
+    if(req.body.email && req.body.password){
+        console.log('body mail: ', req.body.email)
+        console.log('body:', req.body);
+        db.checkLogin(req.body.email)
+            .then(profileInfo =>{
+                if(profileInfo.rows[0]){
+                    req.session.first = profileInfo.rows[0].first;
+                    req.session.last = profileInfo.rows[0].last;
+                    req.session.mail = profileInfo.rows[0].email;
+                    req.session.id = profileInfo.rows[0].id;
+                    console.log('print out profileInfo: ', profileInfo);
+                    console.log('req.body.password: ', req.body.password);
+                    console.log('profilInfo.rows: ', profileInfo.rows[0].password); 
+                    db.checkPassword(req.body.password, profileInfo.rows[0].password)
+                        .then(matchingPassword => {
+                            if(matchingPassword == true){
+                                res.json({success:true});                                                        
+                            } else {
+                                res.json({success:false});
+                            }  
+                        })
+                        .catch(err=>{
+                            console.log("error checkPassword: ", err);
+                        }); 
+                }
+            }).catch(err =>{
+                console.log('error checkLogin: ', err);
+            });
+    } else {
+        res.render('/login');
+    }
+});
 
 
 //WELCOME COMPONENT
 app.get('/welcome', function(req, res) {
-    if (req.session.userId) {
+    if (req.session.id) {
         res.redirect('/');
     } else {
         res.sendFile(__dirname + '/index.html');
     }
 })
 
+
+
 // the last route
 app.get('*', function(req, res) {
-    if (!req.session.userId) {
+    if (!req.session.id) {
         res.redirect('/welcome');
     } else {
         res.sendFile(__dirname + '/index.html');

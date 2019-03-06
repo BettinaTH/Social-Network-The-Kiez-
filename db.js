@@ -3,7 +3,7 @@ var bcrypt = require('bcryptjs');
 var spicedPg = require('spiced-pg');
 
 
-var db = spicedPg(process.env.DATABASE_URL || 'postgres:postgres:postgres@localhost:5432/wintergreen-petition');
+var db = spicedPg(process.env.DATABASE_URL || 'postgres:postgres:postgres@localhost:5432/network');
 
 
 // USER REGISTER FROM PETITION//
@@ -19,7 +19,7 @@ module.exports.moreProfile = function moreProfile(age, city, url, user_id){
 
 // checkin FROM PETITION
 module.exports.checkLogin = function checkLogin(email){
-    return db.query('SELECT first, last, email, password, users.id, signature.id AS signed FROM users LEFT JOIN signature ON signature.user_id=users.id WHERE email=$1', [email]);
+    return db.query('SELECT id, first, last, email, password FROM users WHERE email=$1', [email]);
 };
 // check Password FROM PETITION
 module.exports.checkPassword = function checkPassword(textEnteredInLoginForm, hashedPasswordFromDatabase) {
