@@ -35,9 +35,9 @@ module.exports.checkPassword = function checkPassword(textEnteredInLoginForm, ha
 };
 
 
-// EDITING Profile FROM PETITION
-module.exports.showFullProfile = function showFullProfile (user_id){ 
-    return db.query('SELECT first, last, age, city, url, password, email FROM users LEFT JOIN users_profile ON users.id=users_profile.user_id WHERE user_id=$1', [user_id]);
+// GETTING USERS INFO
+module.exports.userInfo = function showFullProfile (user_id){ 
+    return db.query('SELECT id, first, last, picture, bio FROM users WHERE users.id=$1', [user_id]);
 };
 
 module.exports.updateProfile = function updateProfile (first, last, email, age, city, url, user_id){

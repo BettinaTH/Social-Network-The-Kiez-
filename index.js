@@ -8,6 +8,10 @@ const csurf = require('csurf');
 const db = require ('./db');
 const hashPassword = require ('./auth.js').hashPassword;
 /// petition copy end
+// amazon bucket
+//const s3 = require('./s3');
+//const config = require('./config'); 
+// ENDE amazon bucket
 
 app.use(compression());
 
@@ -29,6 +33,23 @@ app.use(function(req, res, next){
     next();
 });
 
+/// Middleware to prevent not loggedIn users to go to the loggedIn Section
+/*app.use(function (req, res, next){
+    if (!req.session.id && req.url != '/welcome' && req.url != '/login'){
+        res.redirect('/welcome');
+    } else {
+        next();
+    }
+});*/
+
+//function for required Login
+function isLoggedIn(req, res, next){
+    if(!req.session.id){
+        res.sendStatus(403);
+    } else {
+        next();
+    }
+}
 
 
 // checking if I am in production //
@@ -42,6 +63,44 @@ if (process.env.NODE_ENV != 'production') {
 } else {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 };
+
+
+/// USER COMPONENT
+app.get('/user', isLoggedIn, (req, res) => {
+        db.userInfo(req.session.id).then(({rows}) =>{
+            if (!rows[0].picture){
+                rows[0].picture = '/default.jpg'
+            }
+            res.json(rows[0])
+        }).catch(err =>{
+            console.log('err in app get user: ', err)
+        })
+    }); 
+
+
+/*// UPLOAD FROM IMAGEBOARD
+app.post('/upload', uploader.single('file'),s3.upload, function(req, res) {
+    // If nothing went wrong the file is already in the uploads directory
+    console.log('req.file: ', req.file);
+    console.log('req.body:', req.body);
+    if (req.file) {
+        var url= config.s3Url + req.file.filename;
+        console.log('config.s3Url: ', config.s3Url);
+        console.log('req.file.filename:', req.file.filename);
+
+        db.saveImage(req.body.title, req.body.username, req.body.description, url)
+            .then(results => {
+                res.json(results.rows); 
+            }).catch(err =>{
+                console.log('err in db save Image: ', err);
+            });
+    } else {
+        res.json({
+            success: false
+        });
+    }
+});*/
+
 
 //REGISTER COMPONENT
 app.post('/register', function(req, res) {
