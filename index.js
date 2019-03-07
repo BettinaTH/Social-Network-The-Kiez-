@@ -69,7 +69,7 @@ if (process.env.NODE_ENV != 'production') {
 app.get('/user', isLoggedIn, (req, res) => {
         db.userInfo(req.session.id).then(({rows}) =>{
             if (!rows[0].picture){
-                rows[0].picture = '/default.jpg'
+                rows[0].picture = 'default.png'
             }
             res.json(rows[0])
         }).catch(err =>{

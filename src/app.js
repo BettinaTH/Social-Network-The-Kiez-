@@ -1,21 +1,28 @@
 import React from 'react';
-import axios from 'axios';
+import axios from './axios';
 //import uploader from '/uploader';
+//import Navbar from 'navbar';
+import ProfilePic from './profilepic';
 
 export default class App extends React.Component{
     constructor(props){
         super(props);
-        this.state = {}
+        this.state = {
+            uploaderIsVisible: false
+        }
+        this.showUploader = this.showUploader.bind(this);
+        this.setImage = this.setImage.bind(this);
+
     }
 
     showUploader(){
-        this.stetState({
+        this.setState({
             uploaderIsVisible: true
         })
     };
 
-    setImage(iamge){
-        this.setState({picture})
+    setImage(picture){
+        this.setState({picture, uploaderIsVisible: false})
     }
 componentDidMount(){
     axios.get('/user').then(({data}) =>{
@@ -34,13 +41,15 @@ componentDidMount(){
             return null;
         }
         return(
-
-            // profilePic
-            //uploader
-            // {this.state.uploaderIsVisible &&<Uploader/>}
-            <div>
+            <div className="container">
                 <img src="kiez-logo.png" className='logoSmall' />
-               
+                <ProfilePic
+                    picture={this.state.picture}
+                    first={this.state.first}
+                    last={this.state.last}
+                    onClick={this.showUploader}
+                />
+                {this.state.uploaderIsVisible && <Uploader setImage={this.setImage} />}
             </div>
         );
 

@@ -1,10 +1,10 @@
 import React from 'react';
 
 export default function ProfilePic(props){
-    const image = props.image || '/default.jpg';
+    const picture = props.picture || 'default.png';
     return(
         <img 
-        scr={image}
+        scr={picture}
         alt={`${props.first} ${props.last}`}
         onClick={props.onClick}
         />

@@ -23,13 +23,16 @@ button{
     background-color: aqua;
     width: 300px;
     display: flex;
-    flex-direction: column;
-
-    
+    flex-direction: column; 
 }
 .logoBig{
 width: 300px;
 height: 300px;
+}
+
+.profilePic{
+    width:20%;
+    height:20%;
 }
 .logoSmall{
     width: 100px;

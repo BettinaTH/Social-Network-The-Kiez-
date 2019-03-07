@@ -4,7 +4,6 @@ export default function Navbar() {
         <div id='navbar'>
             <div className='container'>
                 <img src='kiez-logo.png'/>
-
             </div>
         </div>
     );
