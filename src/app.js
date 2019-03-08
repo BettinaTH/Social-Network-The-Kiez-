@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from './axios';
-//import uploader from '/uploader';
+import Uploader from './uploader';
 //import Navbar from 'navbar';
 import ProfilePic from './profilepic';
 
@@ -11,7 +11,7 @@ export default class App extends React.Component{
             uploaderIsVisible: false
         }
         this.showUploader = this.showUploader.bind(this);
-        this.setImage = this.setImage.bind(this);
+        this.setPicture = this.setPicture.bind(this);
 
     }
 
@@ -19,11 +19,13 @@ export default class App extends React.Component{
         this.setState({
             uploaderIsVisible: true
         })
-    };
+    }
 
-    setImage(picture){
+    setPicture(picture){
         this.setState({picture, uploaderIsVisible: false})
     }
+
+    
 componentDidMount(){
     axios.get('/user').then(({data}) =>{
         console.log('data in in app DidMount: ', data)
@@ -49,7 +51,7 @@ componentDidMount(){
                     last={this.state.last}
                     onClick={this.showUploader}
                 />
-                {this.state.uploaderIsVisible && <Uploader setImage={this.setImage} />}
+                {this.state.uploaderIsVisible && <Uploader setPicture={this.setPicture} />}
             </div>
         );
 
