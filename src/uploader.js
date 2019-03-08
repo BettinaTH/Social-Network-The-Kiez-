@@ -8,33 +8,6 @@ export default class Uploader extends React.Component{
         };
 
 
-   
-
-
-
-    // call the function to change the state of profile picture
-
-/*
-
- getFile(e){
-        this.form.file = e.target.files[0];
-        console.log(' e inhandlefileChange: ', e);
-    };
-    var formData = new FormData();
-    formData.append('file', this.form.file);
-
-    var self = this;
-
-    componentDidMount(){
-        axios.post('/upload', formData)
-            .then(function (results){
-                this.setState
-            }).catch( function(err){
-                console.log('err in axios post uplaod:', err);
-
-        });
-    }
-   */ 
     render (){
         console.log(this.props);
         return(

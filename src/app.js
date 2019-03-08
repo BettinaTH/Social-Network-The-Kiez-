@@ -4,15 +4,19 @@ import Uploader from './uploader';
 //import Navbar from 'navbar';
 import Profile from './profile';
 import ProfilePic from './profilepic';
+import BioEditor from './bioeditor';
 
 export default class App extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            uploaderIsVisible: false
+            uploaderIsVisible: false,
+            EditorIsVisible: false,
         }
         this.showUploader = this.showUploader.bind(this);
         this.setPicture = this.setPicture.bind(this);
+        this.showEditor = this.showEditor.bind(this);
+        this.setBio = this.setBio.bind(this);
 
     }
 
@@ -22,8 +26,18 @@ export default class App extends React.Component{
         })
     }
 
+    showEditor(){
+        this.setState({
+            EditorIsVisible:true
+        })
+    }
+
     setPicture(picture){
         this.setState({picture, uploaderIsVisible: false})
+    }
+
+    setBio(bio){
+        this.setState({bio, editorIsVisible: false})
     }
     
 
@@ -47,24 +61,27 @@ componentDidMount(){
         return(
             <div className="container">
                 <img src="kiez-logo.png" className='logoSmall' />
-                <div>
+                <div className='box'>
                 <ProfilePic
                     picture={this.state.picture}
                     first={this.state.first}
                     last={this.state.last}
                     onClick={this.showUploader}
                 />
+                {this.state.uploaderIsVisible && <Uploader setPicture={this.setPicture} />}
                 </div>
                 <Profile
                     id={this.state.id}
                     first={this.state.first}
                     last={this.state.last}
                     picture={this.state.picture}
-                    onClick={this.showUploader}
+                    //onClick={this.showUploader}
                     bio={this.state.bio}
                     setBio={this.setBio}
+                    show={this.showEditor}
                     />
-                {this.state.uploaderIsVisible && <Uploader setPicture={this.setPicture} />}
+         
+                {this.state.editorIsVisible && <BioEditor setBio={this.setBio}/>}
                 
                 </div>
         );

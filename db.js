@@ -45,11 +45,9 @@ module.exports.saveImage = function saveImage(id, url){
     return db.query(`UPDATE users SET picture = $2 WHERE id=$1`, [id, url]);};
 
 
-
-
-
-module.exports.updateProfile = function updateProfile (first, last, email, age, city, url, user_id){
-    return db.query('INSERT first, last, email, age, city, url FROM users LEFT JOIN users_profile ON users.id=users_profile.user_id VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (user_id) DO UPDATE SET first = $1, last = $2, email = $3, age = $4, city = $5, url=$6 ',[first, last, email, age, city, url, user_id]);
+// update BIo
+module.exports.updateBio = function updateBio (id, bio){
+    return db.query('UPDATE users SET bio = $2  WHERE id =$1',[ id, bio]);
 };
 module.exports.updateProfilePW = function updateProfilePW (first, last, email, password, age, city, url, user_id){
     return db.query(`INSERT first, last, email, password, age, 

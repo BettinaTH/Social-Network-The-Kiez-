@@ -19,7 +19,8 @@ export default class Profile extends React.Component{
                     picture = {this.props.picture}
                     showUploader = {this.props.showUploader}/>
                  <BioEditor
-                    bio = {this.props.bio}
+                    bio={this.props.bio}
+                    show = {this.props.showEditor}
                     setBio ={this.props.setBio}
                     />
                 </div>
