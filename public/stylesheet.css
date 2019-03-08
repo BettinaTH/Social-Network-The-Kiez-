@@ -38,3 +38,11 @@ height: 300px;
     width: 100px;
     height:100px;
 }
+.smallPic{
+    width: 200px;
+    height: 200px;
+}
+.box{
+    display: flex;
+    justify-content: flex-end;
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import axios from './axios';
 import Uploader from './uploader';
 //import Navbar from 'navbar';
+import Profile from './profile';
 import ProfilePic from './profilepic';
 
 export default class App extends React.Component{
@@ -24,6 +25,7 @@ export default class App extends React.Component{
     setPicture(picture){
         this.setState({picture, uploaderIsVisible: false})
     }
+    
 
     
 componentDidMount(){
@@ -45,14 +47,26 @@ componentDidMount(){
         return(
             <div className="container">
                 <img src="kiez-logo.png" className='logoSmall' />
+                <div>
                 <ProfilePic
                     picture={this.state.picture}
                     first={this.state.first}
                     last={this.state.last}
                     onClick={this.showUploader}
                 />
+                </div>
+                <Profile
+                    id={this.state.id}
+                    first={this.state.first}
+                    last={this.state.last}
+                    picture={this.state.picture}
+                    onClick={this.showUploader}
+                    bio={this.state.bio}
+                    setBio={this.setBio}
+                    />
                 {this.state.uploaderIsVisible && <Uploader setPicture={this.setPicture} />}
-            </div>
+                
+                </div>
         );
 
     };

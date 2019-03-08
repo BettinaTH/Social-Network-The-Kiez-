@@ -7,10 +7,14 @@ const bodyParser = require('body-parser');
 const csurf = require('csurf');
 const db = require ('./db');
 const hashPassword = require ('./auth.js').hashPassword;
+var multer = require('multer');
+var uidSafe = require('uid-safe');
+var path = require('path');
+
 /// petition copy end
 // amazon bucket
-//const s3 = require('./s3');
-//const config = require('./config'); 
+const s3 = require('./s3');
+const config = require('./config'); 
 // ENDE amazon bucket
 
 app.use(compression());
@@ -32,6 +36,26 @@ app.use(function(req, res, next){
     res.cookie('mytoken', req.csrfToken());
     next();
 });
+
+// store and uplaod images - do not touch//
+var diskStorage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, __dirname + '/uploads');
+    },
+    filename: function (req, file, callback) {
+        uidSafe(24).then(function(uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    }
+});
+
+var uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152
+    }
+});
+//////////////////////////////////////////////////////
 
 /// Middleware to prevent not loggedIn users to go to the loggedIn Section
 /*app.use(function (req, res, next){
@@ -69,7 +93,7 @@ if (process.env.NODE_ENV != 'production') {
 app.get('/user', isLoggedIn, (req, res) => {
         db.userInfo(req.session.id).then(({rows}) =>{
             if (!rows[0].picture){
-                rows[0].picture = 'default.png'
+                rows[0].picture = '/default.png'
             }
             res.json(rows[0])
         }).catch(err =>{
@@ -78,28 +102,29 @@ app.get('/user', isLoggedIn, (req, res) => {
     }); 
 
 
-/*// UPLOAD FROM IMAGEBOARD
+// UPLOAD FROM IMAGEBOARD
 app.post('/upload', uploader.single('file'),s3.upload, function(req, res) {
     // If nothing went wrong the file is already in the uploads directory
-    console.log('req.file: ', req.file);
-    console.log('req.body:', req.body);
-    if (req.file) {
-        var url= config.s3Url + req.file.filename;
-        console.log('config.s3Url: ', config.s3Url);
-        console.log('req.file.filename:', req.file.filename);
+    // console.log('req.file: ', req.file);
+    // console.log('req.body:', req.body);
+    // if (req.file) {
+         var url= config.s3Url + req.file.filename;
+    //     console.log('config.s3Url: ', config.s3Url);
+    //     console.log('req.file.filename:', req.file.filename);
 
-        db.saveImage(req.body.title, req.body.username, req.body.description, url)
-            .then(results => {
-                res.json(results.rows); 
+        db.saveImage(req.session.id, url)
+            .then(data => {
+                res.json(data.rows); 
             }).catch(err =>{
                 console.log('err in db save Image: ', err);
-            });
-    } else {
-        res.json({
-            success: false
-        });
-    }
-});*/
+    //         });
+    // } else {
+    //     res.json({
+    //         success: false
+    //     });
+    // }
+})
+});
 
 
 //REGISTER COMPONENT
