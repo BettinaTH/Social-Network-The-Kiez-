@@ -12,11 +12,13 @@ export default class App extends React.Component{
         this.state = {
             uploaderIsVisible: false,
             EditorIsVisible: false,
+            bio: {},
         }
         this.showUploader = this.showUploader.bind(this);
         this.setPicture = this.setPicture.bind(this);
         this.showEditor = this.showEditor.bind(this);
         this.setBio = this.setBio.bind(this);
+        //this.changeBio = this.changeBio(this);
 
     }
 
@@ -31,6 +33,12 @@ export default class App extends React.Component{
             EditorIsVisible:true
         })
     }
+
+    /*changeBio(e){
+        this.setState({
+            bio: e.target.value
+        })
+    }*/
 
     setPicture(picture){
         this.setState({picture, uploaderIsVisible: false})
@@ -75,10 +83,11 @@ componentDidMount(){
                     first={this.state.first}
                     last={this.state.last}
                     picture={this.state.picture}
-                    //onClick={this.showUploader}
+                    onClick={this.showUploader}
                     bio={this.state.bio}
                     setBio={this.setBio}
-                    show={this.showEditor}
+                    showEditor={this.showEditor}
+                    
                     />
          
                 {this.state.editorIsVisible && <BioEditor setBio={this.setBio}/>}

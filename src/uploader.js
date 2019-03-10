@@ -9,7 +9,6 @@ export default class Uploader extends React.Component{
 
 
     render (){
-        console.log(this.props);
         return(
             <div>
                 <p>Want to add a new picture?</p>
@@ -21,7 +20,7 @@ export default class Uploader extends React.Component{
                         form.append('file', e.target.files[0]);
                         axios.post('/upload', form);
                     }}/>
-                    <button>uplaod</button>
+                    <button>upload</button>
                 </form>
             </div>
         )

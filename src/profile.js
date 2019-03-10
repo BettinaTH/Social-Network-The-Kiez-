@@ -9,6 +9,8 @@ export default class Profile extends React.Component{
         this.state={};
         };
 
+
+
         render (){
             return(
                 <div>
@@ -17,10 +19,11 @@ export default class Profile extends React.Component{
                     {this.props.last}  
                  <ProfilePic
                     picture = {this.props.picture}
-                    showUploader = {this.props.showUploader}/>
+                    showUploader = {this.props.showUploader}
+                    />
                  <BioEditor
                     bio={this.props.bio}
-                    show = {this.props.showEditor}
+                    showEditor = {this.props.showEditor}
                     setBio ={this.props.setBio}
                     />
                 </div>
