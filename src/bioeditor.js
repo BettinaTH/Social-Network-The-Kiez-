@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axios from './axios';
 
 
 export default class BioEditor extends React.Component{
@@ -23,7 +23,7 @@ saveBio(e){
     e.preventDefault();
     console.log('e:', e)
     axios.post('/bio', {
-        bio: this.state.bio    
+        bio: this.state.bio   
     }).then(({data}) => {
         console.log('save Bio:', data.bio);
         this.props.setBio(data.bio);
@@ -31,11 +31,10 @@ saveBio(e){
 }
 
     render (){
-        const bio = this.props.bio
         return(
             <div>
                 <p>your short bio! <button onClick={this.props.showEditor}>edit</button></p>
-                <textarea name="bio" className="TextArea"></textarea>
+                <textarea className="textarea" onChange={this.changeBio}></textarea>
                 <button type="button" onClick={this.saveBio}> Save </button>
                 </div>
         )

@@ -59,7 +59,7 @@ componentDidMount(){
 }
     render (){
             if(!this.state.id){
-                console.log('this.state.id: ', this.state.id)
+                console.log('this.state.id in render app js.: ', this.state.id)
             return null;
         }
         return(

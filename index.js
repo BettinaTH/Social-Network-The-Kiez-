@@ -88,7 +88,11 @@ if (process.env.NODE_ENV != 'production') {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 };
 
-
+/// FRIENDSHIP
+app.get('get-initial-status/:otherUserId', (req, res) =>{
+    //db query to get initial status of friendshipp
+    // once we get that initial statur of friendship, res.json it back to the FriendButton
+})
 
 /// USER COMPONENT
 app.get('/user', isLoggedIn, (req, res) => {
@@ -104,8 +108,10 @@ app.get('/user', isLoggedIn, (req, res) => {
 
 // UPDATE BIO
 app.post('/bio', function(req, res){
-    console.log('id:', req.session);
-    db.updateBio(req.session.id, req.body.textarea).then(data => {
+    console.log('anything from BioEditor');
+    console.log('id in update bio:', req.session);
+    console.log('body.bio: ', req.body.bio)
+    db.updateBio(req.session.id, req.body.bio).then(data => {
         console.log('rep. textarea in app post bio: ', rep.body.textarea)
         res.json(data.rows); 
         }).catch(err =>{

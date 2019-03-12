@@ -5,6 +5,13 @@ var spicedPg = require('spiced-pg');
 
 var db = spicedPg(process.env.DATABASE_URL || 'postgres:postgres:postgres@localhost:5432/network');
 
+// FRIENDSHIP
+module.exports.friendship = function friendship(myId, othersUserID){
+    let q = 'SELECT * FROM friendships WHERE(receiver = $1 AND sender = $2) OR (receiver = $2 AND senver = $1)';
+    
+    let params = [myId, otherUserId]
+    return db.query 
+}
 
 // USER REGISTER FROM PETITION//
 module.exports.register = function register(first, last, email, password){
