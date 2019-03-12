@@ -33,7 +33,8 @@ saveBio(e){
     render (){
         return(
             <div>
-                <p>your short bio! <button onClick={this.props.showEditor}>edit</button></p>
+                <p>What do you like? Who are you?<button onClick={this.props.showEditor}>edit</button></p> 
+                <div className='biotext'>{this.props.bio}</div>
                 <textarea className="textarea" onChange={this.changeBio}></textarea>
                 <button type="button" onClick={this.saveBio}> Save </button>
                 </div>
