@@ -9,6 +9,7 @@ export default class BioEditor extends React.Component{
 
         this.saveBio = this.saveBio.bind(this);
         this.changeBio = this.changeBio.bind(this);
+        this.showEditor = this.showEditor.bind(this);
     }
 
     changeBio(e){
@@ -18,6 +19,12 @@ export default class BioEditor extends React.Component{
     }
 // Porps for editing bio
 // save bio axios post & pass prop setBio to parent
+showEditor(){
+        this.setState({
+             editorIsVisible:true
+         })
+    }
+
 
 saveBio(e){
     e.preventDefault();
@@ -28,17 +35,23 @@ saveBio(e){
         console.log('save Bio:', data);
         this.props.setBio(data[0].bio);
         });
-        
+
 }
 
     render (){
+
         return(
             <div>
-                <p>What do you like? Who are you?<button onClick={this.props.showEditor}>edit</button></p> 
+                <p>What do you like? Who are you?<button onClick={this.showEditor}>edit</button></p> 
                 <div className='biotext'>{this.props.bio}</div>
-                <textarea className="textarea" onChange={this.changeBio}></textarea>
-                <button type="button" onClick={this.saveBio}> Save </button>
-                </div>
+             
+                {this.state.editorIsVisible &&
+                    <div className='bioeditor'>
+                        <textarea className="textarea" onChange={this.changeBio}></textarea>
+                        <button type="button" onClick={this.saveBio}> Save </button>
+                    </div>
+                }
+            </div>
         )
     };
 }

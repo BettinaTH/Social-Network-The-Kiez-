@@ -23,7 +23,6 @@ export default class Profile extends React.Component{
                     />
                  <BioEditor
                     bio={this.props.bio}
-                    showEditor = {this.props.showEditor}
                     setBio ={this.props.setBio}
                     editorIsVisible={this.props.editorIsVisible}
                     />

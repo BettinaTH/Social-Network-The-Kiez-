@@ -4,7 +4,6 @@ import Uploader from './uploader';
 //import Navbar from 'navbar';
 import Profile from './profile';
 import ProfilePic from './profilepic';
-import BioEditor from './bioeditor';
 
 export default class App extends React.Component{
     constructor(props){
@@ -16,9 +15,7 @@ export default class App extends React.Component{
         }
         this.showUploader = this.showUploader.bind(this);
         this.setPicture = this.setPicture.bind(this);
-        this.showEditor = this.showEditor.bind(this);
         this.setBio = this.setBio.bind(this);
-        //this.changeBio = this.changeBio(this);
 
     }
 
@@ -27,14 +24,7 @@ export default class App extends React.Component{
             uploaderIsVisible: true
         })
     }
-
-    showEditor(){
-        this.setState({
-            editorIsVisible:true
-        })
-    }
-
-    
+   
 
     setPicture(picture){
         this.setState({picture, uploaderIsVisible: false})
@@ -84,10 +74,7 @@ componentDidMount(){
                     setBio={this.setBio}
                     showEditor={this.showEditor}
                     editorIsVisible={this.state.editorIsVisible}
-                    />
-         
-                {this.state.editorIsVisible && <BioEditor setBio={this.setBio}/>}
-                
+                    />              
                 </div>
         );
 
