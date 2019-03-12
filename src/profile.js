@@ -14,7 +14,7 @@ export default class Profile extends React.Component{
         render (){
             return(
                 <div>
-                    <p>Hier ist dein Profil</p>
+                    <p>Here is your profile.</p>
                     {this.props.first}
                     {this.props.last}  
                  <ProfilePic
@@ -25,6 +25,7 @@ export default class Profile extends React.Component{
                     bio={this.props.bio}
                     showEditor = {this.props.showEditor}
                     setBio ={this.props.setBio}
+                    editorIsVisible={this.props.editorIsVisible}
                     />
                 </div>
             )

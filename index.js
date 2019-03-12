@@ -104,16 +104,20 @@ app.get('/user', isLoggedIn, (req, res) => {
 
 // UPDATE BIO
 app.post('/bio', function(req, res){
-    db.updateBio(req.session.id, rep.body.textarea).then(data => {
+    console.log('id:', req.session);
+    db.updateBio(req.session.id, req.body.textarea).then(data => {
         console.log('rep. textarea in app post bio: ', rep.body.textarea)
         res.json(data.rows); 
-})
+        }).catch(err =>{
+            console.log('err in update Bio:', err)
+        })
 });
 
 
 // UPLOAD
 app.post('/upload', uploader.single('file'),s3.upload, function(req, res) {
     // If nothing went wrong the file is already in the uploads directory
+    console.log('Id:', req.session);
          var url= config.s3Url + req.file.filename;
 
         db.saveImage(req.session.id, url)
