@@ -54,7 +54,7 @@ module.exports.saveImage = function saveImage(id, url){
 
 // update BIo
 module.exports.updateBio = function updateBio (id, bio){
-    return db.query('UPDATE users SET bio = $2  WHERE id =$1',[ id, bio]);
+    return db.query('UPDATE users SET bio = $2  WHERE id =$1 RETURNING bio' ,[ id, bio]);
 };
 module.exports.updateProfilePW = function updateProfilePW (first, last, email, password, age, city, url, user_id){
     return db.query(`INSERT first, last, email, password, age, 

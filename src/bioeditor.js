@@ -25,9 +25,10 @@ saveBio(e){
     axios.post('/bio', {
         bio: this.state.bio   
     }).then(({data}) => {
-        console.log('save Bio:', data.bio);
-        this.props.setBio(data.bio);
+        console.log('save Bio:', data);
+        this.props.setBio(data[0].bio);
         });
+        
 }
 
     render (){

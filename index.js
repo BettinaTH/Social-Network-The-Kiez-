@@ -112,7 +112,8 @@ app.post('/bio', function(req, res){
     console.log('id in update bio:', req.session);
     console.log('body.bio: ', req.body.bio)
     db.updateBio(req.session.id, req.body.bio).then(data => {
-        console.log('rep. textarea in app post bio: ', rep.body.textarea)
+        console.log('req. textarea in app post bio: ', req.body.bio)
+        console.log('data in bio: ', data)
         res.json(data.rows); 
         }).catch(err =>{
             console.log('err in update Bio:', err)
