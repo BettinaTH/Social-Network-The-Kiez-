@@ -106,6 +106,21 @@ app.get('/user', isLoggedIn, (req, res) => {
         })
     }); 
 
+/// see other users profile    
+app.get('/users:id', isLoggedIn, (req, res) => {
+    console.log('session id: ', req.session.id)
+    console.log('params id: ', req.params.id)
+    if(req.params.id != req.session.id)
+        db.userInfo(req.params.id).then(({rows}) =>{
+            if (!rows[0].picture){
+                rows[0].picture = '/default.png'
+            }
+            res.json(rows[0])
+        }).catch(err =>{
+            console.log('err in app get user: ', err)
+        })
+    }); 
+
 // UPDATE BIO
 app.post('/bio', function(req, res){
     console.log('anything from BioEditor');

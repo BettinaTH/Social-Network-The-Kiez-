@@ -7,7 +7,10 @@ export default class Uploader extends React.Component{
         this.state={};
         };
 
-
+// proflepic does not appears directly to react then(({data}) => {
+        // console.log('save Bio:', data);
+        // this.props.setBio(data[0].bio);
+        // });
     render (){
         return(
             <div>
@@ -19,7 +22,7 @@ export default class Uploader extends React.Component{
                         const form = new FormData;
                         form.append('file', e.target.files[0]);
                         axios.post('/upload', form);
-                    }}/>
+                    }}/> 
                     <button>upload</button>
                 </form>
             </div>

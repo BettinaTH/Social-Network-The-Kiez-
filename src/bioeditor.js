@@ -24,6 +24,11 @@ showEditor(){
              editorIsVisible:true
          })
     }
+hideEditor(){
+    this.setState({
+        editorIsVisible: false
+    })
+}
 
 
 saveBio(e){
@@ -34,7 +39,8 @@ saveBio(e){
     }).then(({data}) => {
         console.log('save Bio:', data);
         this.props.setBio(data[0].bio);
-        });
+        this.hideEditor()
+    });
 
 }
 
@@ -51,6 +57,7 @@ saveBio(e){
                         <button type="button" onClick={this.saveBio}> Save </button>
                     </div>
                 }
+            
             </div>
         )
     };

@@ -4,6 +4,8 @@ import Uploader from './uploader';
 //import Navbar from 'navbar';
 import Profile from './profile';
 import ProfilePic from './profilepic';
+import OtherProfile from './otherprofile';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 export default class App extends React.Component{
     constructor(props){
@@ -53,29 +55,44 @@ componentDidMount(){
             return null;
         }
         return(
-            <div className="container">
-                <img src="kiez-logo.png" className='logoSmall' />
-                <div className='box'>
-                <ProfilePic
-                    picture={this.state.picture}
-                    first={this.state.first}
-                    last={this.state.last}
-                    onClick={this.showUploader}
-                />
-                {this.state.uploaderIsVisible && <Uploader setPicture={this.setPicture} />}
+            <div>
+                <div className="container-row">
+                    <img src="/kiez-logo.png" className='logoSmall' />
+                    <div className='box'>
+                    <ProfilePic
+                        picture={this.state.picture}
+                        first={this.state.first}
+                        last={this.state.last}
+                        onClick={this.showUploader}
+                    />
+                    {this.state.uploaderIsVisible && <Uploader setPicture={this.setPicture} />}
+                    </div>
                 </div>
-                <Profile
-                    id={this.state.id}
-                    first={this.state.first}
-                    last={this.state.last}
-                    picture={this.state.picture}
-                    onClick={this.showUploader}
-                    bio={this.state.bio}
-                    setBio={this.setBio}
-                    showEditor={this.showEditor}
-                    editorIsVisible={this.state.editorIsVisible}
-                    />              
-                </div>
+
+                    <BrowserRouter>
+                        <div>
+                            <Route
+                                exact
+                                path="/"
+                                render={() => (
+                                    <Profile
+                                        id={this.state.id}
+                                        first={this.state.first}
+                                        last={this.state.last}
+                                        picture={this.state.picture}
+                                        onClick={this.showUploader}
+                                        bio={this.state.bio}
+                                        setBio={this.setBio}
+                                        showEditor={this.showEditor}
+                                        editorIsVisible={this.state.editorIsVisible}
+                                    /> 
+                                )}
+                            />
+                            <Route path="/user/:id" component={OtherProfile} />
+                        </div>
+                    </BrowserRouter>
+                
+            </div>
         );
 
     };
