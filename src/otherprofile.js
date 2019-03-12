@@ -2,6 +2,7 @@ import React from 'react';
 import axios from './axios';
 import ProfilePic from './profilepic';
 import BioEditor from './bioeditor';
+import Profile from './profile';
 
 export default class OtherProfile extends React.Component {
     constructor(props) {
@@ -9,7 +10,8 @@ export default class OtherProfile extends React.Component {
         this.state = {};
     }
     componentDidMount() {
-        axios.get('/users/' + this.props.match.params.id).then(({data}) => {
+        axios.get('/others/' + this.props.match.params.id).then(({data}) => {
+            console.log('params ID in otherprofile Mount: ', this.props.match.id)
             if (data.id) {
                 this.setState(data);
             } else {
@@ -22,10 +24,8 @@ export default class OtherProfile extends React.Component {
     render() {
         return (
             <div>
-                <ProfilePic
+                <Profile
                     picture = {this.state.picture}
-                />
-                <BioEditor
                     bio = {this.state.bio}
                 />
             </div>

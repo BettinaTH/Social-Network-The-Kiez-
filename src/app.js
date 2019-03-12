@@ -68,7 +68,6 @@ componentDidMount(){
                     {this.state.uploaderIsVisible && <Uploader setPicture={this.setPicture} />}
                     </div>
                 </div>
-
                     <BrowserRouter>
                         <div>
                             <Route
@@ -90,8 +89,7 @@ componentDidMount(){
                             />
                             <Route path="/user/:id" component={OtherProfile} />
                         </div>
-                    </BrowserRouter>
-                
+                    </BrowserRouter>  
             </div>
         );
 

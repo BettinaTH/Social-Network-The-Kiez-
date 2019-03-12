@@ -48,8 +48,9 @@ saveBio(e){
 
         return(
             <div>
-                <p>What do you like? Who are you?<button onClick={this.showEditor}>edit</button></p> 
+                <p>Your status / bio:</p>
                 <div className='biotext'>{this.props.bio}</div>
+                <button onClick={this.showEditor}>edit</button> 
              
                 {this.state.editorIsVisible &&
                     <div className='bioeditor'>
