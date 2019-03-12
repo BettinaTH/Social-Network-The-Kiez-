@@ -1,6 +1,7 @@
 import React from 'react';
 import ProfilePic from './profilepic';
 import BioEditor from './bioeditor';
+import Uploader from './uploader';
 
 
 export default class Profile extends React.Component{
@@ -10,16 +11,17 @@ export default class Profile extends React.Component{
         };
 
 
-
         render (){
             return(
             <div className='container-main'>
                 <div>
                  <ProfilePic
                     picture = {this.props.picture}
-                    showUploader = {this.props.showUploader}
+                    onClick={this.props.onClick}
                     />
+                 {this.props.uploaderIsVisible && <Uploader setPicture={props.setPicture} />}
                 </div>
+
                     <div className='container-col'>
                     <h4>Hi {this.props.first}, great your back.</h4>
                         <BioEditor

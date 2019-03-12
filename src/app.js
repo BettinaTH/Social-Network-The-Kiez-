@@ -26,7 +26,6 @@ export default class App extends React.Component{
             uploaderIsVisible: true
         })
     }
-   
 
     setPicture(picture){
         this.setState({picture, uploaderIsVisible: false})
