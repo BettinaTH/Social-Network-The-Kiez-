@@ -111,14 +111,11 @@ app.get('/get-initial-status/:otherUserId', (req, res) =>{
 
 app.post('/get-friend/', (req, res) =>{
     console.log('connected to get-friend');
-    db.sendFriendRequest(req.session.id, req.body.id, req.body.status).then(
-        console.log('post get friend req.session.id: ', req.session.id),
-        console.log('post get friend req.params.id: ', req.body.id),
-        console.log('post get body: ', req.body.status),
-        data =>{
-           res.json[{
-               friendshipStatus: data.status.rows[0]
-           }] 
+    db.sendFriendRequest(req.session.id, req.body.id, req.body.status)
+    .then(data =>{
+        console.log('data.status.row: ', data.rows);
+        console.log('data.rows0.accepted: ', data.rows[0].accepted);
+           res.json(data.rows[0].accepted)
         }
     )
     //db query to get initial status of friendshipp

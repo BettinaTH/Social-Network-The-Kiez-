@@ -6,14 +6,14 @@ constructor(){
     super();
     this.state = {};
     this.changeStatus = this.changeStatus.bind(this);
-    this.friendsButton = this.FriendsButton.bind(this);
+    //this.FriendsButton = this.FriendsButton.bind(this);
 }
 
-FriendsButton(text){
-    this.setState({
-        buttonText: text
-    })
-}
+// FriendsButton(text){
+//     this.setState({
+//         buttonText: text
+//     })
+// }
 
 componentDidMount(){
     // ajax request to server to figure out INITIAL status of friendship
@@ -30,7 +30,7 @@ componentDidMount(){
 
         // else if (resp.data.accepted == YES)
             // SET BUTTON to END FRIENDSHIP
-
+       
         this.setState({
             buttonText: 'Send Friend Request'
         });
@@ -44,10 +44,26 @@ componentDidMount(){
                 console.log('myId in change status: ', this.props.myId);
                 console.log('otherId in change status: ', this.props.otherUserId);
                 axios.post('/get-friend', {id: this.props.otherUserId, status:'pending'})
-                .then(resp =>{
-                    this.friendsButton('Cancel Request')
-                })
+                .then(data =>{
+                    console.log('text button3: ', data)
+                    this.setState({
+                        buttonText: 'CANCEL REQUEST'
+                    });
+                    })
+                
             }
+            //         console.log('text button3: ', data)
+            //         if(data === 'pending'){
+            //             console.log(this.FriendsButton)
+            //             console.log(this.setState)
+            //             this.setState({
+            //                 buttonText: 'Cancel Request'
+            //             })
+            //         }
+            //     }).catch( err =>{
+            //         console.log('err in send request')
+            //     })
+            // }
         // change the button to CANCEL REQUEST
         //
         // else if
