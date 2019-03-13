@@ -89,11 +89,39 @@ if (process.env.NODE_ENV != 'production') {
 };
 
 /// FRIENDSHIP
-app.get('get-initial-status/:otherUserId', (req, res) =>{
-    db.friendship(req.session.id, req.params.id)
+app.get('/get-initial-status/:otherUserId', (req, res) =>{
+    console.log('app get initial status');
+    console.log('session id in Friendship status:', req.session.id)
+    console.log('req.params.id in Friendship status: ', req.params.otherUserId)
+    db.friendship(req.session.id, req.params.otherUserId).then(
+        accepted =>{
+            if(!accepted.rows[0]){
+                console.log('accpeted rows: ', accepted.rows)
+                res.json({});
+            } else{
+                res.json({
+                    Initialstatus: accepted.rows[0]
+                });
+            }
+        }
+    )
     //db query to get initial status of friendshipp
     // once we get that initial statu of friendship, res.json it back to the FriendButton
 })
+
+app.post('get-friend/:otherUserId', (req, res) =>{
+    db.sendFriendRequest(req.session.id, req.params.otherUserId)
+    //db query to get initial status of friendshipp
+    // once we get that initial statu of friendship, res.json it back to the FriendButton
+})
+
+app.post('lost-friend/:otherUserId', (req, res) =>{
+    db.endFriendship(req.session.id, req.params.otherUserId)
+    //db query to get initial status of friendshipp
+    // once we get that initial statu of friendship, res.json it back to the FriendButton
+})
+
+
 
 
 /// USER COMPONENT

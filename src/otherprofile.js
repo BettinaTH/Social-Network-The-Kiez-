@@ -3,6 +3,7 @@ import axios from './axios';
 import ProfilePic from './profilepic';
 import BioEditor from './bioeditor';
 import Profile from './profile';
+import FriendButton from './friendbutton';
 
 export default class OtherProfile extends React.Component {
     constructor(props) {
@@ -25,7 +26,8 @@ export default class OtherProfile extends React.Component {
     render() {
         return (
             <div>
-                <p>This is the profile of {this.state.first}</p>
+                <p>Get Friends with {this.state.first}</p>
+                <FriendButton/> 
                 <Profile
                     picture = {this.state.picture}
                     bio = {this.state.bio}
