@@ -16,8 +16,8 @@ module.exports.endFriendship = function endFriendship(myId, othersUserID){
     return db.query('DELETE * FROM friendships WHERE sender=$1', [myId, othersUserID]);
 };
 // ADD A FRIEND
-module.exports.sendFriendRequest = function sendFriendRequest(myId, othersUserID){
-        return db.query('INSERT INTO friendships sender, reciever, status VALUES ($1, $2, $3) RETURNING *', [myId, othersUserID, status]);
+module.exports.sendFriendRequest = function sendFriendRequest(myId, othersUserID, status){
+        return db.query('INSERT INTO friendships (sender, receiver, accepted) VALUES ($1, $2, $3) RETURNING *', [myId, othersUserID, status]);
 };
 
 

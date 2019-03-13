@@ -40,8 +40,14 @@ componentDidMount(){
 
     changeStatus(){ // update the database and 2nd job is update button text
         console.log('change Status running');
-            if(this.state.buttonText == 'Send Friend Request')
-        // axios.post('/get-friend') set accepted to pending 
+            if(this.state.buttonText == 'Send Friend Request'){
+                console.log('myId in change status: ', this.props.myId);
+                console.log('otherId in change status: ', this.props.otherUserId);
+                axios.post('/get-friend', {id: this.props.otherUserId, status:'pending'})
+                .then(resp =>{
+                    this.friendsButton('Cancel Request')
+                })
+            }
         // change the button to CANCEL REQUEST
         //
         // else if
@@ -64,7 +70,7 @@ componentDidMount(){
 
         // IF the button said 'accepted friend request' run a update query to accepted column
         // from false to true
-    }
+    };
 
  render(){
      return(

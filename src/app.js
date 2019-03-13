@@ -59,6 +59,7 @@ componentDidMount(){
                     <img src="/kiez-logo.png" className='logoSmall' />
                     <div>
                         <ProfilePic
+                            id={this.state.id}
                             picture={this.state.picture}
                             first={this.state.first}
                             last={this.state.last}
@@ -93,6 +94,7 @@ componentDidMount(){
                                             key={props.match.url}
                                             match={props.match}
                                             history={props.history}
+                                            myId={this.state.id}
                                         />
                                     )}
                                 />

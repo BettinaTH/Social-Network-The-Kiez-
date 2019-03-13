@@ -17,6 +17,7 @@ export default class Profile extends React.Component{
                 <div>
                  <ProfilePic
                     picture = {this.props.picture}
+                    id={this.props.id}
                     onClick={this.props.onClick}
                     />
                  {this.props.uploaderIsVisible && <Uploader setPicture={props.setPicture} />}
