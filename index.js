@@ -107,7 +107,7 @@ app.get('/user', isLoggedIn, (req, res) => {
     }); 
 
 /// see other users profile    
-app.get('/others:id', isLoggedIn, (req, res) => {
+app.get('/others/:id', isLoggedIn, (req, res) => {
     console.log('session id: ', req.session.id)
     console.log('params id: ', req.params.id)
     if(req.params.id != req.session.id)

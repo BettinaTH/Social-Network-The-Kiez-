@@ -57,14 +57,14 @@ componentDidMount(){
             <div>
                 <div className="container-row">
                     <img src="/kiez-logo.png" className='logoSmall' />
-                    <div className='box'>
-                    <ProfilePic
-                        picture={this.state.picture}
-                        first={this.state.first}
-                        last={this.state.last}
-                        onClick={this.showUploader}
-                    />
-                    {this.state.uploaderIsVisible && <Uploader setPicture={this.setPicture} />}
+                    <div>
+                        <ProfilePic
+                            picture={this.state.picture}
+                            first={this.state.first}
+                            last={this.state.last}
+                            onClick={this.showUploader}
+                        />
+                        {this.state.uploaderIsVisible && <Uploader setPicture={this.setPicture} />}
                     </div>
                 </div>
                     <BrowserRouter>
@@ -86,7 +86,16 @@ componentDidMount(){
                                     /> 
                                 )}
                             />
-                            <Route path="/user/:id" component={OtherProfile} />
+                            <Route
+                                    path="/user/:id"
+                                    render={props => (
+                                        <OtherProfile
+                                            key={props.match.url}
+                                            match={props.match}
+                                            history={props.history}
+                                        />
+                                    )}
+                                />
                         </div>
                     </BrowserRouter>  
             </div>
