@@ -7,17 +7,17 @@ var db = spicedPg(process.env.DATABASE_URL || 'postgres:postgres:postgres@localh
 
 
 // FRIENDSHIP
-module.exports.friendship = function friendship(myIdsen, othersUserID){
-    return db.query( 'SELECT * FROM friendships WHERE(receiver = $1 AND sender = $2) OR (receiver = $2 AND senver = $1)', [myId, otherUserId]);
+module.exports.friendship = function friendship(myId, otherUserId){
+    return db.query( 'SELECT * FROM friendships WHERE(receiver = $1 AND sender = $2) OR (receiver = $2 AND sender = $1)', [myId, otherUserId]);
 };
 
 // END FRIENDSHIP
-module.exports.endFriendship = function endFriendship(myIdsen, othersUserID){
-    return db.query('DELETE * FROM friendships WHERE sender=$1', [myIdsen, othersUserID]);
+module.exports.endFriendship = function endFriendship(myId, othersUserID){
+    return db.query('DELETE * FROM friendships WHERE sender=$1', [myId, othersUserID]);
 };
 // ADD A FRIEND
-module.exports.sendFriendRequest = function sendFriendRequest(myIdsen, othersUserID){
-        return db.query('INSERT INTO friendships sender, reciever, status VALUES ($1, $2, $3) RETURNING *', [myIdsen, othersUserID, status]);
+module.exports.sendFriendRequest = function sendFriendRequest(myId, othersUserID){
+        return db.query('INSERT INTO friendships sender, reciever, status VALUES ($1, $2, $3) RETURNING *', [myId, othersUserID, status]);
 };
 
 

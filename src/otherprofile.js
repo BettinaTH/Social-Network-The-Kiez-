@@ -27,7 +27,8 @@ export default class OtherProfile extends React.Component {
         return (
             <div>
                 <p>Get Friends with {this.state.first}</p>
-                <FriendButton/> 
+                <FriendButton
+                otherUserId={this.props.match.params.id}/> 
                 <Profile
                     picture = {this.state.picture}
                     bio = {this.state.bio}
