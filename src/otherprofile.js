@@ -15,18 +15,18 @@ export default class OtherProfile extends React.Component {
             console.log('data from other: ', data)
             if (data.data.id) {
                 this.setState(data.data);
-            // } else {
-            //     this.props.history.push('/');
+             } else {
+                 this.props.history.push('/');
             }
-        // }).catch(function(err){
-        //     this.props.history.push('/');
+             }).catch(function(err){
+             this.props.history.push('/');
         });
     }
     render() {
         return (
             <div>
+                <p>This is the profile of {this.state.first}</p>
                 <Profile
-                    first = {this.state.first}
                     picture = {this.state.picture}
                     bio = {this.state.bio}
                 />

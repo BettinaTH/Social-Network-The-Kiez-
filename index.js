@@ -90,9 +90,11 @@ if (process.env.NODE_ENV != 'production') {
 
 /// FRIENDSHIP
 app.get('get-initial-status/:otherUserId', (req, res) =>{
+    db.friendship(req.session.id, req.params.id)
     //db query to get initial status of friendshipp
-    // once we get that initial statur of friendship, res.json it back to the FriendButton
+    // once we get that initial statu of friendship, res.json it back to the FriendButton
 })
+
 
 /// USER COMPONENT
 app.get('/user', isLoggedIn, (req, res) => {

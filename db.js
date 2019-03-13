@@ -5,18 +5,25 @@ var spicedPg = require('spiced-pg');
 
 var db = spicedPg(process.env.DATABASE_URL || 'postgres:postgres:postgres@localhost:5432/network');
 
+// END FRIENDSHIP
+module.export.endFriend = function endFriend(sender_id, reciever_id){
+    return db.query(`DELETE * FROM friendships WHERE sender_id=$1 `, [sender_id, reciever_id]);
+};
+
+// ADD A FRIEND
+module.export.addFriend = function addFriend(sender_id, reciever_id){
+        return db.query(`INSERT INTO friendships sender.id, reciever.id, status VALUES ($1, $2, $3) RETURNING * `, [sender_id, reciever_id, status]);
+};
+
 // FRIENDSHIP
 module.exports.friendship = function friendship(myId, othersUserID){
-    let q = 'SELECT * FROM friendships WHERE(receiver = $1 AND sender = $2) OR (receiver = $2 AND senver = $1)';
-    
-    let params = [myId, otherUserId]
-    return db.query 
-}
+    return db.query( 'SELECT * FROM friendships WHERE(receiver = $1 AND sender = $2) OR (receiver = $2 AND senver = $1)', [myId, otherUserId]);
+
+};
 
 // USER REGISTER FROM PETITION//
 module.exports.register = function register(first, last, email, password){
-    return db.query('INSERT INTO users (first, last, email, password) VALUES ($1, $2, $3, $4) RETURNING id',
-        [first, last, email, password]);
+    return db.query('INSERT INTO users (first, last, email, password) VALUES ($1, $2, $3, $4) RETURNING id',[first, last, email, password]);
 };
 
 // USER ADDS MORE PROFILE FROM PETITION
@@ -56,10 +63,5 @@ module.exports.saveImage = function saveImage(id, url){
 module.exports.updateBio = function updateBio (id, bio){
     return db.query('UPDATE users SET bio = $2  WHERE id =$1 RETURNING bio' ,[ id, bio]);
 };
-module.exports.updateProfilePW = function updateProfilePW (first, last, email, password, age, city, url, user_id){
-    return db.query(`INSERT first, last, email, password, age, 
-    city, url FROM users LEFT JOIN users_profile ON users.id=users_profile.user_id VALUES 
-    ($1, $2, $3, $4, $5, $6, $7) ON CONFLICT (user_id) DO UPDATE SET first = $1, last = $2, email = $3,  
-    password = $4, age = $5, city = $6, url=$7`,[first, last, email, password, age, city, url, user_id]);
-};
+
 
