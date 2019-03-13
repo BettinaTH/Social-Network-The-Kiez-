@@ -17,20 +17,22 @@ constructor(){
 
 componentDidMount(){
     // ajax request to server to figure out INITIAL status of friendship
-    axios.get('/get-initial-status/' + this.props.otherUserId).then(resp =>{
+    axios.get('/get-initial-status/' + this.props.otherUserId).then(data =>{
         console.log('othersUserId: ', this.props.otherUserId)
         console.log('Mount in friendbutton')
-        //if(!resp.data.accepted) button text: Send friendship
-
-        // else if (resp.data.accepted == 'pending')
-                //if (resp.data.accepted.receiver == this.props.otherUserId)
-                //button text Cancel request
-
-                // else button text Accept FRIEND REQUEST
-
-        // else if (resp.data.accepted == YES)
-            // SET BUTTON to END FRIENDSHIP
-       
+        console.log('data in Moundt friendbutton: ', data)
+        console.log('data receiver id: ', data.data.receiver)
+        console.log('data status: ', data.data.accepted)
+        // if(!data.data.accepted === 'yes'){
+        //     this.setState({buttonText: 'END FRIENDSHIP'})
+        // } else if(data.data.accepted === 'pending' && data.data.receiver === this.props.otherUserId) {
+        //     this.setState({
+        //         buttonText: 'ACCEPT REQUEST'})
+        // }else if(data.data.accepted === 'pedning' && data.data.sender === this.props.ohterUserÍd){
+        //     this.setState({buttonText: 'CANCEL REQUEST'})
+        // }else{
+        //     this.setState({buttonText: 'SEND FRIENDSHIP REQUEST'})
+        // }
         this.setState({
             buttonText: 'Send Friend Request'
         });
@@ -45,7 +47,7 @@ componentDidMount(){
                 console.log('otherId in change status: ', this.props.otherUserId);
                 axios.post('/get-friend', {id: this.props.otherUserId, status:'pending'})
                 .then(data =>{
-                    console.log('text button3: ', data)
+                    console.log('Status in ChangeStatus: ', data)
                     this.setState({
                         buttonText: 'CANCEL REQUEST'
                     });

@@ -94,14 +94,13 @@ app.get('/get-initial-status/:otherUserId', (req, res) =>{
     console.log('session id in Friendship status:', req.session.id)
     console.log('req.params.id in Friendship status: ', req.params.otherUserId)
     db.friendship(req.session.id, req.params.otherUserId).then(
-        status =>{
-            if(!status.rows[0]){
-                console.log('accpeted rows: ', status.rows)
+        data =>{
+            console.log('data.rows in status: ', data.rows)
+            if(!data.rows[0].accepted){
+                console.log('accpeted rows: ', data.rows)
                 res.json({});
             } else{
-                res.json({
-                    friendshipStatus: status.rows[0]
-                });
+                res.json(data.rows[0]);
             }
         }
     )
