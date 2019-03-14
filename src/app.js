@@ -5,6 +5,7 @@ import Uploader from './uploader';
 import Profile from './profile';
 import ProfilePic from './profilepic';
 import OtherProfile from './otherprofile';
+import Friends from './friends';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 export default class App extends React.Component{
@@ -97,7 +98,14 @@ componentDidMount(){
                                             myId={this.state.id}
                                         />
                                     )}
-                                />
+                            />
+                            <Route
+                                    path="/friends"
+                                    render={() => (
+                                        <Friends/>
+                                    )}
+                            />
+
                         </div>
                     </BrowserRouter>  
             </div>

@@ -10,10 +10,10 @@ componentDidMount(){
 }
 
     render(){
-        console.log(this.props); // test show two object
+        //console.log(this.props); // test show two object
         return(
             <div>
-                <Friends/>
+                Hello, here is a list of friends!
             </div>
         )
     }

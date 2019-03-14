@@ -87,8 +87,21 @@ if (process.env.NODE_ENV != 'production') {
 } else {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 };
+////////////////////////////////////////////////////////////
 
-/// FRIENDSHIP
+// FRIENDSLIST
+app.get('/friendslist/', (req, res) =>{
+    console.log('get a list of friens route')
+    db.friends(req.session.id).then(
+        data =>{
+            console.log('data.rows in get friends: ', data.rows)
+            res.json(data.rows)
+        }
+    )
+    console.log()
+})
+
+/// COMPONENT FRIENDSBUTTON
 app.get('/get-initial-status/:otherUserId', (req, res) =>{
     console.log('app get initial status');
     console.log('session id in Friendship status:', req.session.id)
@@ -116,13 +129,12 @@ app.post('/get-friend/', (req, res) =>{
            res.json(data.rows[0].accepted)
         }
     )
-    //db query to get initial status of friendshipp
-    // once we get that initial statu of friendship, res.json it back to the FriendButton
 })
 
 
 app.post('/lost-friend/', (req, res) =>{
     db.endFriendship(req.session.id, req.body.id)
+    console.log('data in lost friend: ', data.rows)
     .then(data =>{
         res.json(data.rows)
     })
@@ -140,8 +152,6 @@ app.post('/add-friend/', (req, res) =>{
         res.json(data.rows)
     })
 })
-
-
 
 
 /// USER COMPONENT

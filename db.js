@@ -5,6 +5,17 @@ var spicedPg = require('spiced-pg');
 
 var db = spicedPg(process.env.DATABASE_URL || 'postgres:postgres:postgres@localhost:5432/network');
 
+// FRIENDLIST
+module.exports.friends = function friends(myId){
+    return db.query( `
+    SELECT users.id, first, last, picture, accepted
+    FROM friendships
+    JOIN users
+    ON (accepted = 'pending' AND receiver = $1 AND sender = users.id)
+    OR (accepted = 'yes' AND receiver = $1 AND sender = users.id)
+    OR (accepted = 'yes' AND sender = $1 AND receiver = users.id)`, [myId])
+};
+
 
 // FRIENDSHIP
 module.exports.friendship = function friendship(myId, otherUserId){
@@ -25,15 +36,11 @@ module.exports.addFriend = function addFriend(myId, othersUserID, status){
     return db.query('UPDATE friendships SET accepted=$3 WHERE (receiver = $1 AND sender = $2) OR (receiver = $2 AND sender = $1)',[myId, othersUserID, status])
 };
 
-// USER REGISTER FROM PETITION//
+// USER REGISTER 
 module.exports.register = function register(first, last, email, password){
     return db.query('INSERT INTO users (first, last, email, password) VALUES ($1, $2, $3, $4) RETURNING id',[first, last, email, password]);
 };
 
-// USER ADDS MORE PROFILE FROM PETITION
-module.exports.moreProfile = function moreProfile(age, city, url, user_id){
-    return db.query('INSERT INTO users_profile(age, city, url, user_id) VALUES ($1, $2, $3, $4)', [age, city,url, user_id]);
-};
 
 // checkin FROM PETITION
 module.exports.checkLogin = function checkLogin(email){

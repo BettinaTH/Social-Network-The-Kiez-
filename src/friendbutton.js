@@ -6,21 +6,12 @@ constructor(){
     super();
     this.state = {};
     this.changeStatus = this.changeStatus.bind(this);
-    //this.FriendsButton = this.FriendsButton.bind(this);
 }
 
-// FriendsButton(text){
-//     this.setState({
-//         buttonText: text
-//     })
-// }
 
 componentDidMount(){
-    // ajax request to server to figure out INITIAL status of friendship
     axios.get('/get-initial-status/' + this.props.otherUserId).then(data =>{
         console.log('othersUserId: ', this.props.otherUserId)
-        console.log('Mount in friendbutton')
-        console.log('data in Moundt friendbutton: ', data)
         console.log('data receiver id: ', data.data.receiver)
         console.log('data status: ', data.data.accepted)
         if(data.data.accepted == 'yes'){
@@ -37,7 +28,7 @@ componentDidMount(){
     
 }
 
-    changeStatus(){ // update the database and 2nd job is update button text
+    changeStatus(){ 
         console.log('change Status running');
         console.log('myId in change status: ', this.props.myId);
         console.log('otherId in change status: ', this.props.otherUserId);
@@ -67,23 +58,6 @@ componentDidMount(){
                     })
                 })
             }
-    
-        
-        // else if == 'ACCEPT FRIEND REQUEST
-            // axios post to get FRIEND and INSERT accpted to YES
-            // set button to END FRIENDSHIP
-        
-        // else if == 'END FRIENDSHIP'
-            // axios post to DELETE row
-            // SET BUTTON to Send request
-
-
-        //IF the button said ' friend request when the button was clicked _--POST
-        // request to server and server should run ann INSERT query into friendships
-        // OR 'END FRIENDSHIP' POST request to server and server should run a DELETE query
-
-        // IF the button said 'accepted friend request' run a update query to accepted column
-        // from false to true
     };
 
  render(){
