@@ -100,6 +100,7 @@ app.get('/get-initial-status/:otherUserId', (req, res) =>{
                 console.log('accpeted rows: ', data.rows)
                 res.json({});
             } else{
+                console.log('data.rows0: ', data.rows[0])
                 res.json(data.rows[0]);
             }
         }
@@ -125,8 +126,19 @@ app.post('/lost-friend/', (req, res) =>{
     .then(data =>{
         res.json(data.rows)
     })
-    //db query to get initial status of friendshipp
-    // once we get that initial statu of friendship, res.json it back to the FriendButton
+})
+
+app.post('/add-friend/', (req, res) =>{
+    console.log('app post route add friend');
+    console.log('status in add Friend route: ', req.body.status)
+    console.log('my id in add friend: ', req.session.id)
+    console.log('body ID in add friend: ', req.body.id)
+
+    db.addFriend(req.session.id, req.body.id, req.body.status)
+    .then(data =>{
+        console.log('data.rows0.accepted: ', data.rows);
+        res.json(data.rows)
+    })
 })
 
 

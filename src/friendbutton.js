@@ -23,14 +23,14 @@ componentDidMount(){
         console.log('data in Moundt friendbutton: ', data)
         console.log('data receiver id: ', data.data.receiver)
         console.log('data status: ', data.data.accepted)
-        if(!data.data.accepted === 'yes'){
+        if(data.data.accepted == 'yes'){
             this.setState({buttonText: 'END FRIENDSHIP'})
         } else if(data.data.accepted === 'pending' && data.data.receiver == this.props.otherUserId) {
             this.setState({
                 buttonText: 'CANCEL REQUEST'})
-        }else if(data.data.accepted === 'pedning' && data.data.sender == this.props.ohterUserÍd){
-            this.setState({buttonText: 'ACCEPT REQUEST'})
-        }else{
+        }else if(data.data.accepted === 'pending' && data.data.sender !== this.props.ohterUserÍd){
+            this.setState({buttonText: 'ACCEPT FRIEND REQUEST'})
+        }else {
             this.setState({buttonText: 'SEND FRIENDSHIP REQUEST'})
         }
          })
@@ -41,7 +41,7 @@ componentDidMount(){
         console.log('change Status running');
         console.log('myId in change status: ', this.props.myId);
         console.log('otherId in change status: ', this.props.otherUserId);
-            if(this.state.buttonText == 'Send Friend Request'){
+            if(this.state.buttonText == 'SEND FRIENDSHIP REQUEST'){
                 axios.post('/get-friend/', {id: this.props.otherUserId, status:'pending'})
                 .then(data =>{
                     console.log('Status in ChangeStatus: ', data)
@@ -50,11 +50,20 @@ componentDidMount(){
                     });
                     })
                 
-            } else if (this.state.buttonText == 'CANCEL REQUEST'){
+            } else if (this.state.buttonText == 'CANCEL REQUEST' || 'END FRIENDSHIP'){
                 axios.post('/lost-friend/', {id: this.props.otherUserId})
                 .then(data =>{
                     this.setState({
-                        buttonText: 'SEND FREIND REQUEST'
+                        buttonText: 'SEND FRIENDSHIP REQUEST'
+                    })
+                })
+            } else if(this.state.buttonText == 'ACCEPT FRIEND REQUEST'){
+                console.log('accept fried request axios post')
+                axios.post('/add-friend/', {id: this.props.otherUserId, status:'yes'})
+                .then(data =>{
+                    console.log('data in change add Friend: ', data);
+                    this.setState({
+                        buttonText: 'END FRIENDSHIP'
                     })
                 })
             }

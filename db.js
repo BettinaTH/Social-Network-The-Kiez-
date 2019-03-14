@@ -22,8 +22,8 @@ module.exports.sendFriendRequest = function sendFriendRequest(myId, othersUserID
 
 // ADD A FRIEND
 module.exports.addFriend = function addFriend(myId, othersUserID, status){
-    return db.query('UPDATE * FROM friendships WHERE(receiver = $1 AND sender = $2) OR (receiver = $2 AND sender = $1)')
-}
+    return db.query('UPDATE friendships SET accepted=$3 WHERE (receiver = $1 AND sender = $2) OR (receiver = $2 AND sender = $1)',[myId, othersUserID, status])
+};
 
 // USER REGISTER FROM PETITION//
 module.exports.register = function register(first, last, email, password){
