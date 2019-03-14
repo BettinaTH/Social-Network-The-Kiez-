@@ -39,10 +39,10 @@ componentDidMount(){
 
     changeStatus(){ // update the database and 2nd job is update button text
         console.log('change Status running');
+        console.log('myId in change status: ', this.props.myId);
+        console.log('otherId in change status: ', this.props.otherUserId);
             if(this.state.buttonText == 'Send Friend Request'){
-                console.log('myId in change status: ', this.props.myId);
-                console.log('otherId in change status: ', this.props.otherUserId);
-                axios.post('/get-friend', {id: this.props.otherUserId, status:'pending'})
+                axios.post('/get-friend/', {id: this.props.otherUserId, status:'pending'})
                 .then(data =>{
                     console.log('Status in ChangeStatus: ', data)
                     this.setState({
@@ -50,25 +50,15 @@ componentDidMount(){
                     });
                     })
                 
+            } else if (this.state.buttonText == 'CANCEL REQUEST'){
+                axios.post('/lost-friend/', {id: this.props.otherUserId})
+                .then(data =>{
+                    this.setState({
+                        buttonText: 'SEND FREIND REQUEST'
+                    })
+                })
             }
-            //         console.log('text button3: ', data)
-            //         if(data === 'pending'){
-            //             console.log(this.FriendsButton)
-            //             console.log(this.setState)
-            //             this.setState({
-            //                 buttonText: 'Cancel Request'
-            //             })
-            //         }
-            //     }).catch( err =>{
-            //         console.log('err in send request')
-            //     })
-            // }
-        // change the button to CANCEL REQUEST
-        //
-        // else if
-            // button Text == 'CANCEL REQUEST'
-            // axios post to delete the rows
-            // set Button to SEND FRIEND REQUEST
+    
         
         // else if == 'ACCEPT FRIEND REQUEST
             // axios post to get FRIEND and INSERT accpted to YES

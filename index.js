@@ -120,8 +120,11 @@ app.post('/get-friend/', (req, res) =>{
 })
 
 
-app.post('lost-friend/', (req, res) =>{
-    db.endFriendship(req.session.id, req.params.otherUserId)
+app.post('/lost-friend/', (req, res) =>{
+    db.endFriendship(req.session.id, req.body.id)
+    .then(data =>{
+        res.json(data.rows)
+    })
     //db query to get initial status of friendshipp
     // once we get that initial statu of friendship, res.json it back to the FriendButton
 })
