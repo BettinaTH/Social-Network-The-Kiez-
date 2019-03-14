@@ -23,20 +23,17 @@ componentDidMount(){
         console.log('data in Moundt friendbutton: ', data)
         console.log('data receiver id: ', data.data.receiver)
         console.log('data status: ', data.data.accepted)
-        // if(!data.data.accepted === 'yes'){
-        //     this.setState({buttonText: 'END FRIENDSHIP'})
-        // } else if(data.data.accepted === 'pending' && data.data.receiver === this.props.otherUserId) {
-        //     this.setState({
-        //         buttonText: 'ACCEPT REQUEST'})
-        // }else if(data.data.accepted === 'pedning' && data.data.sender === this.props.ohterUserÍd){
-        //     this.setState({buttonText: 'CANCEL REQUEST'})
-        // }else{
-        //     this.setState({buttonText: 'SEND FRIENDSHIP REQUEST'})
-        // }
-        this.setState({
-            buttonText: 'Send Friend Request'
-        });
-        })
+        if(!data.data.accepted === 'yes'){
+            this.setState({buttonText: 'END FRIENDSHIP'})
+        } else if(data.data.accepted === 'pending' && data.data.receiver == this.props.otherUserId) {
+            this.setState({
+                buttonText: 'CANCEL REQUEST'})
+        }else if(data.data.accepted === 'pedning' && data.data.sender == this.props.ohterUserÍd){
+            this.setState({buttonText: 'ACCEPT REQUEST'})
+        }else{
+            this.setState({buttonText: 'SEND FRIENDSHIP REQUEST'})
+        }
+         })
     
 }
 

@@ -96,7 +96,7 @@ app.get('/get-initial-status/:otherUserId', (req, res) =>{
     db.friendship(req.session.id, req.params.otherUserId).then(
         data =>{
             console.log('data.rows in status: ', data.rows)
-            if(!data.rows[0].accepted){
+            if(!data.rows){
                 console.log('accpeted rows: ', data.rows)
                 res.json({});
             } else{
@@ -104,8 +104,6 @@ app.get('/get-initial-status/:otherUserId', (req, res) =>{
             }
         }
     )
-    //db query to get initial status of friendshipp
-    // once we get that initial statu of friendship, res.json it back to the FriendButton
 })
 
 app.post('/get-friend/', (req, res) =>{
@@ -120,6 +118,7 @@ app.post('/get-friend/', (req, res) =>{
     //db query to get initial status of friendshipp
     // once we get that initial statu of friendship, res.json it back to the FriendButton
 })
+
 
 app.post('lost-friend/', (req, res) =>{
     db.endFriendship(req.session.id, req.params.otherUserId)

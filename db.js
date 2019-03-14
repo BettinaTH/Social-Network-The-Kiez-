@@ -13,13 +13,17 @@ module.exports.friendship = function friendship(myId, otherUserId){
 
 // END FRIENDSHIP
 module.exports.endFriendship = function endFriendship(myId, othersUserID){
-    return db.query('DELETE * FROM friendships WHERE sender=$1', [myId, othersUserID]);
+    return db.query('DELETE * FROM friendships (receiver = $1 AND sender = $2) OR (receiver = $2 AND sender = $1)', [myId, othersUserID]);
 };
-// ADD A FRIEND
+// REQUEST A FRIEND
 module.exports.sendFriendRequest = function sendFriendRequest(myId, othersUserID, status){
         return db.query('INSERT INTO friendships (sender, receiver, accepted) VALUES ($1, $2, $3) RETURNING *', [myId, othersUserID, status]);
 };
 
+// ADD A FRIEND
+module.exports.addFriend = function addFriend(myId, othersUserID, status){
+    return db.query('UPDATE * FROM friendships WHERE(receiver = $1 AND sender = $2) OR (receiver = $2 AND sender = $1)')
+}
 
 // USER REGISTER FROM PETITION//
 module.exports.register = function register(first, last, email, password){
