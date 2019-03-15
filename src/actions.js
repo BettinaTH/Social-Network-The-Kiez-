@@ -6,7 +6,7 @@ import axios from './axios'
 export async function receiveFriendsWannabes(){
 
     const { data } = await axios.get('/friendslist/');
-    console.log('data in friendslist: ', data)
+    console.log('data in friendslist action.js: ', data)
         return{
             type: 'RECEIVE_FRIENDS_WANNABES',
             friendslist: data.friendslist
