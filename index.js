@@ -110,11 +110,9 @@ app.get('/get-initial-status/:otherUserId', (req, res) =>{
         data =>{
             console.log('data.rows in status: ', data.rows)
             if(!data.rows){
-                console.log('accpeted rows: ', data.rows)
                 res.json({});
             } else{
-                console.log('data.rows0: ', data.rows[0])
-                res.json(data.rows[0]);
+                res.json(data.rows);
             }
         }
     )
@@ -125,8 +123,8 @@ app.post('/get-friend/', (req, res) =>{
     db.sendFriendRequest(req.session.id, req.body.id, req.body.status)
     .then(data =>{
         console.log('data.status.row: ', data.rows);
-        console.log('data.rows0.accepted: ', data.rows[0].accepted);
-           res.json(data.rows[0].accepted)
+        console.log('data.rows0.accepted in get-friend: ', data.rows[0].accepted);
+           res.json(data.rows)
         }
     )
 })
@@ -148,7 +146,7 @@ app.post('/add-friend/', (req, res) =>{
 
     db.addFriend(req.session.id, req.body.id, req.body.status)
     .then(data =>{
-        console.log('data.rows0.accepted: ', data.rows);
+        console.log('data.rows in add friend: ', data.rows);
         res.json(data.rows)
     })
 })

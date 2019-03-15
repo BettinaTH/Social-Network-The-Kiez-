@@ -13,6 +13,17 @@ export async function receiveFriendsWannabes(){
         };
 }
 
+export function deleteFriendship (otherUserId){
+    return axios.post('/lost-friend', {id: otherUserId}).then(()=> {
+        return{
+            type:'LOST_FRIEND',
+            otherUserId
+        }
+    });
+    
+}
+
+
     // ajay GET request to get friend and wannabes
     // ONCE WE GET RESP FROM SERVER return an object that contains type AND list we just
     //got back from server!

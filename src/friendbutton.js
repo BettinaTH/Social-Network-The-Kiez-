@@ -12,21 +12,27 @@ constructor(){
 componentDidMount(){
     axios.get('/get-initial-status/' + this.props.otherUserId).then(data =>{
         console.log('othersUserId: ', this.props.otherUserId)
-        console.log('data receiver id: ', data.data.receiver)
-        console.log('data status: ', data.data.accepted)
-        if(data.data.accepted == 'yes'){
-            this.setState({buttonText: 'END FRIENDSHIP'})
-        } else if(data.data.accepted === 'pending' && data.data.receiver == this.props.otherUserId) {
-            this.setState({
-                buttonText: 'CANCEL REQUEST'})
-        }else if(data.data.accepted === 'pending' && data.data.sender !== this.props.ohterUserÍd){
-            this.setState({buttonText: 'ACCEPT FRIEND REQUEST'})
-        }else {
+        console.log('my Id in friends button: ', this.props.myId)
+        console.log('data 2:', data.data);
+        //console.log('data 1.1: ', data.data[0].accepted); // prints out pending or yes
+        console.log('data.data.length:' , data.data.length); // prints out 0 or 1
+        if(data.data.length === 0){
             this.setState({buttonText: 'SEND FRIENDSHIP REQUEST'})
+        } if (data.data.length >= 1){ 
+
+            if(data.data[0].accepted == 'yes'){
+                this.setState({buttonText: 'END FRIENDSHIP'})
+                }
+            if(data.data[0].accepted === 'pending' && data.data[0].receiver == this.props.otherUserId) {
+                    this.setState({
+                        buttonText: 'CANCEL REQUEST'})
+                }
+            if(data.data[0].accepted === 'pending' && data.data[0].receiver == this.props.myId){
+                    this.setState({buttonText: 'ACCEPT FRIEND REQUEST'})
+                }
+            }
         }
-         })
-    
-}
+    )}
 
     changeStatus(){ 
         console.log('change Status running');
@@ -38,17 +44,24 @@ componentDidMount(){
                     console.log('Status in ChangeStatus: ', data)
                     this.setState({
                         buttonText: 'CANCEL REQUEST'
-                    });
+                        });
                     })
-                
-            } else if (this.state.buttonText == 'CANCEL REQUEST' || 'END FRIENDSHIP'){
+            } else if (this.state.buttonText == 'CANCEL REQUEST'){
+                axios.post('/lost-friend/', {id: this.props.otherUserId})
+                .then(data =>{
+                    console.log('data in cancel: ', data);
+                    this.setState({
+                        buttonText: 'SEND FRIENDSHIP REQUEST'
+                    })
+                })
+            } else if (this.state.buttonText == 'END FRIENDSHIP'){
                 axios.post('/lost-friend/', {id: this.props.otherUserId})
                 .then(data =>{
                     this.setState({
                         buttonText: 'SEND FRIENDSHIP REQUEST'
                     })
                 })
-            } else if(this.state.buttonText == 'ACCEPT FRIEND REQUEST'){
+             } else if(this.state.buttonText == 'ACCEPT FRIEND REQUEST'){
                 console.log('accept fried request axios post')
                 axios.post('/add-friend/', {id: this.props.otherUserId, status:'yes'})
                 .then(data =>{
