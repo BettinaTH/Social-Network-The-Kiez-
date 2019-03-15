@@ -1,13 +1,19 @@
 // all axios request will go here
 // all ctuinbs creators here
 // so ...every function here MUST return an object with a type property!
+import axios from './axios'
 
-export function receiveFriendsWannabes(){
+export async function receiveFriendsWannabes(){
 
-    axios.get('/friendslist/').then(data => {console.log('data in actions.js: ', data)}
+    const { data } = await axios.get('/friendslist/');
+    console.log('data in friendslist: ', data)
+        return{
+            type: 'RECEIVE_FRIENDS_WANNABES',
+            friendslist: data.friendslist
+        };
+}
 
     // ajay GET request to get friend and wannabes
     // ONCE WE GET RESP FROM SERVER return an object that contains type AND list we just
     //got back from server!
     // make user you have friends
-}

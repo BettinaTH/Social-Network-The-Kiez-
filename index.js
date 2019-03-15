@@ -94,8 +94,8 @@ app.get('/friendslist/', (req, res) =>{
     console.log('get a list of friens route')
     db.friends(req.session.id).then(
         data =>{
-            console.log('data.rows in get friends: ', data.rows)
-            res.json(data.rows)
+            console.log('data.rows in friendslist: ', data.rows)
+            res.json({friendslist: data.rows})
         }
     )
     console.log()
