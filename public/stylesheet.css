@@ -94,7 +94,31 @@ height: 300px;
     padding: 10px;
 }
 #piclist{
-    height:100px;
-    width: 100px;
+    height:150px;
+    width: 150px;
+}
+.friendlist{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding-left: 15px;
+    height: 200px;
+    width: 300px;
+    border: 1px solid #cc0c1f
+}
+.eachName{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+.friends{
+    margin-left: 15px;
+    margin-top: 30px;
+}
+h3{
+    margin-bottom: 5px;
+}
+h2{
+    margin-left: 15px;
 }
 
