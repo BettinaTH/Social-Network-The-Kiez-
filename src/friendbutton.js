@@ -63,7 +63,7 @@ componentDidMount(){
                     })
                 })
              } else if(this.state.buttonText == 'ACCEPT FRIEND REQUEST'){
-                console.log('accept fried request axios post')
+                console.log('accept friend request axios post')
                 axios.post('/add-friend/', {id: this.props.otherUserId, status:'yes'})
                 .then(data =>{
                     console.log('data in change add Friend: ', data);

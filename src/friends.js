@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { receiveFriendsWannabes, deleteFriendship } from './actions';
+import { receiveFriendsWannabes, deleteFriendship, newFriend } from './actions';
 
 class Friends extends React.Component {
     constructor(){
@@ -26,12 +26,12 @@ componentDidMount(){
             </div>
         </div>
     )
-        const myWannabes = wannabes && wannabes.map((each)=>
-        <div key={each.id} className='friends'>
-            <img id='piclist' src={each.picture}></img>
+        const myWannabes = wannabes && wannabes.map((aspirant)=>
+        <div key={aspirant.id} className='friends'>
+            <img id='piclist' src={aspirant.picture}></img>
             <div className='eachName'>
-            <div>{each.first}</div> <div>{each.last}</div>
-            <button onClick={() => this.props.dispatch(makeFriends(each.id))}>GET FRIENDS</button>
+            <div>{aspirant.first}</div> <div>{aspirant.last}</div>
+            <button onClick={() => this.props.dispatch(newFriend(aspirant.id))}>ACCEPT FRIEND REQUEST</button>
             </div>
         </div>
         )
@@ -43,7 +43,7 @@ componentDidMount(){
                         {myFriends}
                     </div>
                     <div className='friendslist'>
-                        <h3>Your friend request</h3>
+                        <h3>Your friend requests</h3>
                             {myWannabes}
                     </div>
                 </div>

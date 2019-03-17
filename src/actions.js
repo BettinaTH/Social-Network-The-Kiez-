@@ -22,6 +22,15 @@ export function deleteFriendship (otherUserId){
     });
     
 }
+export function newFriend (otherUserId){
+    return axios.post('/add-friend/',{id: otherUserId, status: 'yes'}).then(() =>{
+        console.log('status in action.js newFriend: ', status)
+        return{
+            type:'NEW_FRIENDSHIP',
+            otherUserId
+        }
+    });
+}
 
 
     // ajay GET request to get friend and wannabes
