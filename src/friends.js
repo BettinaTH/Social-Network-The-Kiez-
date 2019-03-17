@@ -18,7 +18,7 @@ componentDidMount(){
         console.log('const in render wannabes: ', wannabes);
         console.log('const besties in render: ', besties);
         const myFriends = besties && besties.map((each)=>
-        <div key={each.id} className='friendlist'>
+        <div key={each.id} className='friends'>
             <img id='piclist' src={each.picture}></img>
             <div className='eachName'>
             <div>{each.first}</div> <div>{each.last}</div>
@@ -27,7 +27,7 @@ componentDidMount(){
         </div>
     )
         const myWannabes = wannabes && wannabes.map((each)=>
-        <div key={each.id} className='friendlist'>
+        <div key={each.id} className='friends'>
             <img id='piclist' src={each.picture}></img>
             <div className='eachName'>
             <div>{each.first}</div> <div>{each.last}</div>
@@ -37,14 +37,15 @@ componentDidMount(){
         )
         return(
             <div>
-                <h2>Hello, here is a list of friends and wannabes!</h2>
-                <div className='friends'>
-                    <h3>Your friends</h3>
-                    {myFriends}
-                </div>
-                <div className='friends'>
-                    <h3>Your friend request</h3>
-                        {myWannabes}
+                <div className='friends-container'>
+                    <div className='friendslist'>
+                        <h3>Your friends</h3>
+                        {myFriends}
+                    </div>
+                    <div className='friendslist'>
+                        <h3>Your friend request</h3>
+                            {myWannabes}
+                    </div>
                 </div>
             </div>
         )

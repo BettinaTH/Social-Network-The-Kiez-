@@ -45,7 +45,8 @@ componentDidMount(){
                     this.setState({
                         buttonText: 'CANCEL REQUEST'
                         });
-                    })
+                    }).catch ( err =>
+                        console.log('err in  change Status to get-route: ', err))
             } else if (this.state.buttonText == 'CANCEL REQUEST'){
                 axios.post('/lost-friend/', {id: this.props.otherUserId})
                 .then(data =>{
