@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const compression = require('compression');
 //// from petition
-const cookieSession = require('cookie-session');
+//const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const csurf = require('csurf');
 const db = require ('./db');
@@ -28,7 +28,7 @@ app.use(
 );
 /// cookie session with socket.io
 const cookieSession = require('cookie-session');
-        const cookieSessionMiddleware = cookieSession({
+const cookieSessionMiddleware = cookieSession({
             secret: `I'm always angry.`,
             maxAge: 1000 * 60 * 60 * 24 * 90
         });
