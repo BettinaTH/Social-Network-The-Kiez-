@@ -313,9 +313,26 @@ server.listen(8080, function() {
     //socket.emit('')
 });
 
+const onlineUsers = {};
+
+
 io.on('connection', socket =>{
-    console.log('New connection: ', socket.id);
-    socket.on('disconnetc', () =>{
-        console.log('disconnection: ', socket.id)
-    })
+    console.log('hello from socket connection')
+    const {id} = socket.request.session;
+    console.log('userId in socket connection: ', id);
+    if (!id){
+        return socket.disconnect();
+    }
+
+
+    onlineUsers[socket.id] = id;
+
+    db.getOnlineUsers(Object.values(onlineUsers)).then(
+        ({rows}) =>{
+            socket.emit('onlineUsers', {
+                onlineUsers: rows
+            })
+            console.log('rows in socket: ', rows)
+        }
+    )
 })

@@ -12,10 +12,7 @@ import{Provider} from 'react-redux';
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(reduxPromise)));
 ////
 
-// const socket = io.connect();
-// socket.emit('hi',{
-//     funkc: chciken
-// })
+const socket = io.connect();
 
 let elem;
 

@@ -5,6 +5,11 @@ var spicedPg = require('spiced-pg');
 
 var db = spicedPg(process.env.DATABASE_URL || 'postgres:postgres:postgres@localhost:5432/network');
 
+// GET ONLINE USERS
+module.exports.getOnlineUsers = function (onlineUsers){
+    return db.query('SELECT id, first, last, picture FROM users WHERE id = ANY($1)', [onlineUsers])
+};
+
 // FRIENDLIST
 module.exports.friends = function friends(myId){
     return db.query( `
