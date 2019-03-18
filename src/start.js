@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {Welcome} from './welcome';
 import App from './app';
 import * as io from 'socket.io-client';
+import { getSocket } from "./socket.js";
 /// REDUX 
 import { createStore, applyMiddleware } from 'redux';
 import reduxPromise from 'redux-promise';
@@ -19,11 +20,12 @@ let elem;
 if (location.pathname == '/welcome') {
     elem = <Welcome />
 } else {
-    elem = (
+    elem = (getSocket(store),
+    (
         <Provider store = { store }>
             <App/>
         </Provider>
-        );
+        ));
 }
 
 ReactDOM.render(

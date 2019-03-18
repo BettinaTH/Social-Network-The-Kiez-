@@ -32,6 +32,14 @@ export function newFriend (otherUserId){
     });
 }
 
+export async function onlineUsers (data){
+    console.log('data in online users in action.js: ', data)
+    return{
+        type: 'ONLINE_USERS',
+        onlineUsersList: data
+    } 
+}
+
 
     // ajay GET request to get friend and wannabes
     // ONCE WE GET RESP FROM SERVER return an object that contains type AND list we just

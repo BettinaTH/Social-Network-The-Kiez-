@@ -1,5 +1,9 @@
 const express = require('express');
 const app = express();
+/// io socket
+const server = require('http').Server(app);
+const io = require('socket.io')(server, { origins: 'localhost:8080' });
+
 const compression = require('compression');
 //// from petition
 //const cookieSession = require('cookie-session');
@@ -11,9 +15,7 @@ var multer = require('multer');
 var uidSafe = require('uid-safe');
 var path = require('path');
 
-/// io socket
-const server = require('http').Server(app);
-const io = require('socket.io')(server, { origins: 'localhost:8080' });
+
 
 // amazon bucket
 const s3 = require('./s3');

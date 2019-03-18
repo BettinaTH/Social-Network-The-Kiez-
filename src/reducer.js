@@ -26,6 +26,13 @@ export default function reducer(state = {}, action){
             })
         });
     }
+    if (action.type == 'ONLINE_USERS'){
+        console.log('online user action:', action)
+        	state = Object.assign({}, state, {
+                onlineUsersList: action.onlineUsersList
+            })
+
+    }
     // return new state object that contains a property
     // called friendsWannabes whose value is the array we got back from the server
     return state

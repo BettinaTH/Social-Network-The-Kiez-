@@ -1,11 +1,8 @@
-import * as io from 'socket.io.client';
+import * as io from "socket.io-client";
 import { onlineUsers, userJoined, userLeft } from "./actions";
-
-
-
 let socket;
 
-export function getSocket(){
+export function getSocket(store){
     if (!socket){
         socket = io.connect();
 
