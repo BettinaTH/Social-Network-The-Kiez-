@@ -41,6 +41,11 @@ button{
     border-left: 1px solid #cc0c1f;
     padding-left: 20px;
 }
+.container-homepage{
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
 .registration{
     background-color: aqua;
     width: 300px;

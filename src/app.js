@@ -6,6 +6,7 @@ import Profile from './profile';
 import ProfilePic from './profilepic';
 import OtherProfile from './otherprofile';
 import Friends from './friends';
+import OnlineUsers from './online';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 export default class App extends React.Component{
@@ -58,7 +59,8 @@ componentDidMount(){
             <div>
                 <div className="container-row">
                     <img src="/kiez-logo.png" className='logoSmall' />
-                    <div>
+                    <a href="/logout"> Back to the real KIEZ (Logout) </a>
+                    <div className="smallPic">
                         <ProfilePic
                             id={this.state.id}
                             picture={this.state.picture}
@@ -103,6 +105,12 @@ componentDidMount(){
                                     path="/friends"
                                     render={() => (
                                         <Friends/>
+                                    )}
+                            />
+                            <Route
+                                    path="/online-users"
+                                    render={() => (
+                                        <OnlineUsers/>
                                     )}
                             />
 

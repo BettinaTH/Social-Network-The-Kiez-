@@ -11,7 +11,10 @@ var multer = require('multer');
 var uidSafe = require('uid-safe');
 var path = require('path');
 
-/// petition copy end
+/// io socket
+const server = require('http').Server(app);
+const io = require('socket.io')(server, { origins: 'localhost:8080' });
+
 // amazon bucket
 const s3 = require('./s3');
 const config = require('./config'); 
@@ -23,10 +26,17 @@ app.use(compression());
 app.use(
     express.static('./public')
 );
-app.use(cookieSession({
-    secret: `I'm always angry.`,
-    maxAge: 1000 * 60 * 60 * 24 * 14 // Cookies lasts 2 weeks
-}));
+/// cookie session with socket.io
+const cookieSession = require('cookie-session');
+        const cookieSessionMiddleware = cookieSession({
+            secret: `I'm always angry.`,
+            maxAge: 1000 * 60 * 60 * 24 * 90
+        });
+
+        app.use(cookieSessionMiddleware);
+        io.use(function(socket, next) {
+            cookieSessionMiddleware(socket.request, socket.request.res, next);
+        });
 
 app.use(bodyParser.json());
 
@@ -280,6 +290,12 @@ app.get('/welcome', function(req, res) {
     }
 })
 
+// LOGOUT
+app.get("/logout", function(req, res) {
+    req.session = null;
+    res.redirect("/welcome");
+});
+
 
 
 // the last route
@@ -292,6 +308,14 @@ app.get('*', function(req, res) {
 });
 
 
-app.listen(8080, function() {
+server.listen(8080, function() {
     console.log("I'm listening.");
+    //socket.emit('')
 });
+
+io.on('connection', socket =>{
+    console.log('New connection: ', socket.id);
+    socket.on('disconnetc', () =>{
+        console.log('disconnection: ', socket.id)
+    })
+})

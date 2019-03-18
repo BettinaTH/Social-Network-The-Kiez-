@@ -8,7 +8,7 @@ import Login from './login';
 export function Welcome() {
     return (
         <div id='welcome'>
-            <div className='container'>
+            <div className='container-homepage'>
                 <img src='kiez-logo.png' className='logoBig'/>
                 <HashRouter>
                     <div>
