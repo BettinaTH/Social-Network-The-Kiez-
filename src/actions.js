@@ -40,6 +40,22 @@ export async function onlineUsers (data){
     } 
 }
 
+export async function userJoined (data){
+    console.log('data in  users in action.js: ', data)
+    return{
+        type: 'USER_JOINED',
+        joined: data
+    } 
+}
+
+export async function userLeft (data){
+    console.log('data in users left in action.js: ', data)
+    return{
+        type: 'USER_LEFT',
+        left: data
+    } 
+}
+
 
     // ajay GET request to get friend and wannabes
     // ONCE WE GET RESP FROM SERVER return an object that contains type AND list we just

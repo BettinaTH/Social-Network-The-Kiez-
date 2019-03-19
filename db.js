@@ -66,8 +66,8 @@ module.exports.checkPassword = function checkPassword(textEnteredInLoginForm, ha
 
 
 // GETTING USERS INFO
-module.exports.userInfo = function showFullProfile (user_id){ 
-    return db.query('SELECT id, first, last, picture, bio FROM users WHERE users.id=$1', [user_id]);
+module.exports.userInfo = function showFullProfile (id){ 
+    return db.query('SELECT id, first, last, picture, bio FROM users WHERE users.id=$1', [id]);
 };
 
 // Safe new picture

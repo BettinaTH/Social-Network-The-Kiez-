@@ -326,7 +326,6 @@ io.on('connection', socket =>{
         return socket.disconnect();
     }
 
-
     onlineUsers[socket.id] = id;
 
     db.getOnlineUsers(Object.values(onlineUsers)).then(
@@ -334,7 +333,27 @@ io.on('connection', socket =>{
             socket.emit('onlineUsers', {
                 onlineUsers: rows
             })
-            console.log('rows in socket: ', rows)
+            console.log('rows in socket onlineusers: ', rows)
         }
     )
+    const alreadyHere = Object.values(onlineUsers)
+        .filter(onlineId => {
+            return onlineId == id;
+        }).length > 1;
+    if (!alreadyHere){
+        db.userInfo(id).then(({rows}) => {
+                socket.broadcast.emit('userJoined' , {
+                    onlineUser: rows[0]
+                }); 
+                console.log('rows in user joined: ', rows[0]);
+            })
+        }
+    
+    socket.on('disconnect', () =>{
+        delete onlineUsers[socket.id];
+        if(!Object.values(onlineUsers).includes(id)){
+            socket.broadcast.emit('userLeft', id);
+        }
+    })
+
 })

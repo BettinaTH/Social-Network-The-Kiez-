@@ -13,8 +13,9 @@ export function getSocket(store){
         });
         socket.on('userJoined', data =>{
             store.dispatch(
-                userJoined(data)
-            )
+                userJoined(data.onlineUser)
+            ); 
+            console.log('data onlineUsers in socket.js user joined: ', data)
         });
         socket.on('userLeft', data =>{
             store.dispatch(
