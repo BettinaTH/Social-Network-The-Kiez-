@@ -36,7 +36,7 @@ export async function onlineUsers (data){
     console.log('data in online users in action.js: ', data)
     return{
         type: 'ONLINE_USERS',
-        onlineUsersList: data
+        online: data
     } 
 }
 

@@ -12,10 +12,10 @@ componentDidMount(){
 
     render(){
         console.log('Hello from Online Component')
-        if(this.props.onlineUsers){
-        console.log('props from onlineusers in online.js: ', this.props.onlineUsers)
-        const onlineUsers = this.props.onlineUsers
-        
+        if(this.props.state){
+        console.log('props from onlineusers in online.js: ', this.props.state)
+        const onlineUsers = this.props.state.online
+        console.log('const onlineUsers: ', onlineUsers)
         const onlineUsersList = onlineUsers && onlineUsers.map((each)=>
             <div key={each.id} className='friends'>
                 <img id='piclist' src={each.picture}></img>
@@ -44,7 +44,8 @@ componentDidMount(){
 const mapStateToProps = state =>{
     console.log('state in online.js:', state);
     return{
-        onlineUsers: state.onlineUsersList
+        state
+        //onlineUsers: state.online
 
     }
 }

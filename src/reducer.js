@@ -29,7 +29,7 @@ export default function reducer(state = {}, action){
     if (action.type == 'ONLINE_USERS'){
         console.log('online user action:', action)
         	state = Object.assign({}, state, {
-                onlineUsersList: action.onlineUsersList
+                online: action.online
             })
 
     }

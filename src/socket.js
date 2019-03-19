@@ -8,7 +8,7 @@ export function getSocket(store){
 
         socket.on('onlineUsers', data =>{
             store.dispatch(
-                onlineUsers(data)
+                onlineUsers(data.onlineUsers)
             )   
         });
         socket.on('userJoined', data =>{
