@@ -17,8 +17,6 @@ export default class BioEditor extends React.Component{
             bio: e.target.value
         })
     }
-// Porps for editing bio
-// save bio axios post & pass prop setBio to parent
 showEditor(){
         this.setState({
              editorIsVisible:true
@@ -49,12 +47,13 @@ saveBio(e){
         return(
             <div>
                 <p>Your status / bio:</p>
-                <div className='biotext'>{this.props.bio}</div>
-                <button onClick={this.showEditor}>edit</button> 
-             
+                <div className="biotext">
+                    <div>{this.props.bio}</div>
+                    <button className="edit" onClick={this.showEditor}>edit bio</button> 
+                </div>
                 {this.state.editorIsVisible &&
-                    <div className='bioeditor'>
-                        <textarea className="textarea" onChange={this.changeBio}></textarea>
+                    <div className="bioeditor">
+                        <textarea className="textarea" onChange={this.changeBio}>{this.props.bio}</textarea>
                         <button type="button" onClick={this.saveBio}> Save </button>
                     </div>
                 }
