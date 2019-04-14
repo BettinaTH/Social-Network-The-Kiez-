@@ -13,25 +13,24 @@ export default class Profile extends React.Component{
 
         render (){
             return(
-            <div className='container-main'>
-                <div>
-                 <ProfilePic
-                    picture = {this.props.picture}
-                    id={this.props.id}
-                    onClick={this.props.onClick}
-                    />
-                 {this.props.uploaderIsVisible && <Uploader setPicture={props.setPicture} />}
-                </div>
-
-                    <div className='container-col'>
-                    <h4>Hi {this.props.first}, great your back.</h4>
-                        <BioEditor
-                            bio={this.props.bio}
-                            setBio ={this.props.setBio}
-                            editorIsVisible={this.props.editorIsVisible}
+                <div className="container-main">
+                    <div className="profilePic">
+                        <ProfilePic
+                            picture = {this.props.picture}
+                            id={this.props.id}
+                            onClick={this.props.onClick}
+                        />
+                        {this.props.uploaderIsVisible && <Uploader setPicture={props.setPicture} />}
+                    </div>
+                    <div className="container-col">
+                        <h4>Hi {this.props.first}, great your back.</h4>
+                            <BioEditor
+                                bio={this.props.bio}
+                                setBio ={this.props.setBio}
+                                editorIsVisible={this.props.editorIsVisible}
                             />
                     </div>
-            </div>
+                </div>
                     )
         };
     }

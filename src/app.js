@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from './axios';
 import Uploader from './uploader';
-//import Navbar from 'navbar';
 import Profile from './profile';
 import ProfilePic from './profilepic';
 import OtherProfile from './otherprofile';
@@ -58,17 +57,26 @@ componentDidMount(){
         return(
             <div>
                 <div className="container-row">
-                    <img src="/kiez-logo.png" className='logoSmall' />
-                    <a href="/logout"> Back to the real KIEZ (Logout) </a>
-                    <div className="smallPic">
-                        <ProfilePic
-                            id={this.state.id}
-                            picture={this.state.picture}
-                            first={this.state.first}
-                            last={this.state.last}
-                            onClick={this.showUploader}
-                        />
-                        {this.state.uploaderIsVisible && <Uploader setPicture={this.setPicture} />}
+                    <a href="/"><img src="/kiez-logo.png" className='logoSmall'/></a>
+                        <div className="container-left">
+                            <div className="pic-name">
+                                <div className="smallPic">
+                                    <ProfilePic
+                                        id={this.state.id}
+                                        picture={this.state.picture}
+                                        first={this.state.first}
+                                        last={this.state.last}
+                                        onClick={this.showUploader}
+                                    />
+                                </div>    
+                                {this.state.uploaderIsVisible && <Uploader setPicture={this.setPicture} />}
+                                <div className="user-name">{this.state.first}</div>
+                            </div>
+                            <a href="/friends"><button > FRIENDS </button></a>
+                            <a href="/online-users"><button > ONLINE </button></a>
+                        </div>
+                    <div>    
+                        <a href="/logout"><button > Back to the real KIEZ </button></a>
                     </div>
                 </div>
                     <BrowserRouter>
