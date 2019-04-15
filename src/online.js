@@ -1,26 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import{ Link } from 'react-router-dom';
 
 class OnlineUsers extends React.Component {
     constructor(){
         super()
     }
-componentDidMount(){
 
-    // Disptach function from actions.js
-}
 
     render(){
-        console.log('Hello from Online Component')
         if(this.props.state){
-        console.log('props from onlineusers in online.js: ', this.props.state)
         const onlineUsers = this.props.state.online
-        console.log('const onlineUsers: ', onlineUsers)
+        
         const onlineUsersList = onlineUsers && onlineUsers.map((each)=>
             <div key={each.id} className='friends'>
-                <img id='piclist' src={each.picture}></img>
+                <Link to={`/user/${each.id}`}>
+                    <img id='piclist' src={each.picture}></img>
+                </Link>
                 <div className='eachName'>
-                <div>{each.first}</div> <div>{each.last}</div>
+                    <div>{each.first}</div> <div>{each.last}</div>
                 </div>
             </div>
             )  
@@ -45,8 +43,6 @@ const mapStateToProps = state =>{
     console.log('state in online.js:', state);
     return{
         state
-        //onlineUsers: state.online
-
     }
 }
 export default connect(mapStateToProps)(OnlineUsers)

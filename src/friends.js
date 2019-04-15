@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import{ Link } from 'react-router-dom';
 import { receiveFriendsWannabes, deleteFriendship, newFriend } from './actions';
 
 class Friends extends React.Component {
@@ -16,9 +17,9 @@ componentDidMount(){
         const myFriends = besties && besties.map((each)=>
         <div><h3>Your friends</h3>
             <div key={each.id} className="friends">
-    
-                    <img id="piclist" src={each.picture}></img>
-         
+                    <Link to={`/user/${each.id}`}>
+                        <img id="piclist" src={each.picture}></img>
+                    </Link>
                 <div className="eachName">
                     <div>{each.first}</div> <div>{each.last}</div>
                     <button onClick={() => this.props.dispatch(deleteFriendship(each.id))}>END FRIENDSHIP</button>
@@ -29,11 +30,13 @@ componentDidMount(){
         const myWannabes = wannabes && wannabes.map((aspirant)=>
         <div><h3>Your friend requests</h3>
             <div key={asirant.id} className="friends">
-                <img id="piclist" src={aspirant.picture}></img>
-                <div className="eachName">
-                    <div>{aspirant.first}</div> <div>{aspirant.last}</div>
-                    <button onClick={() => this.props.dispatch(newFriend(aspirant.id))}>ACCEPT FRIEND REQUEST</button>
-                </div>
+                <Link to={`/user/${aspirant.id}`}>
+                    <img id="piclist" src={aspirant.picture}></img>
+                </Link>
+                    <div className="eachName">
+                        <div>{aspirant.first}</div> <div>{aspirant.last}</div>
+                        <button onClick={() => this.props.dispatch(newFriend(aspirant.id))}>ACCEPT FRIEND REQUEST</button>
+                    </div>
             </div>
         </div>
         )
