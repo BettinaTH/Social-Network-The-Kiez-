@@ -29,7 +29,7 @@ componentDidMount(){
             )
         const myWannabes = wannabes && wannabes.map((aspirant)=>
         <div><h3>Your friend requests</h3>
-            <div key={asirant.id} className="friends">
+            <div key={aspirant.id} className="friends">
                 <Link to={`/user/${aspirant.id}`}>
                     <img id="piclist" src={aspirant.picture}></img>
                 </Link>

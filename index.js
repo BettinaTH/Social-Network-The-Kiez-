@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-/// io socket
+// io socket
 const server = require('http').Server(app);
 const io = require('socket.io')(server, { origins: 'localhost:8080' });
 
@@ -28,7 +28,8 @@ app.use(compression());
 app.use(
     express.static('./public')
 );
-/// cookie session with socket.io
+
+// cookie session with socket.io
 const cookieSession = require('cookie-session');
 const cookieSessionMiddleware = cookieSession({
             secret: `I'm always angry.`,
@@ -49,7 +50,7 @@ app.use(function(req, res, next){
     next();
 });
 
-// store and uplaod images - do not touch//
+// store and uplaod images - do not touch
 var diskStorage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, __dirname + '/uploads');
@@ -67,16 +68,6 @@ var uploader = multer({
         fileSize: 2097152
     }
 });
-//////////////////////////////////////////////////////
-
-// Middleware to prevent not loggedIn users to go to the loggedIn Section
-/*app.use(function (req, res, next){
-    if (!req.session.id && req.url != '/welcome' && req.url != '/login'){
-        res.redirect('/welcome');
-    } else {
-        next();
-    }
-});*/
 
 //function for required Login
 function isLoggedIn(req, res, next){
@@ -87,8 +78,7 @@ function isLoggedIn(req, res, next){
     }
 }
 
-
-// checking if I am in production //
+// bundle server
 if (process.env.NODE_ENV != 'production') {
     app.use(
         '/bundle.js',
@@ -99,7 +89,7 @@ if (process.env.NODE_ENV != 'production') {
 } else {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 };
-////////////////////////////////////////////////////////////
+
 
 // FRIENDSLIST
 app.get('/friendslist/', (req, res) =>{
@@ -115,9 +105,6 @@ app.get('/friendslist/', (req, res) =>{
 
 // COMPONENT FRIENDSBUTTON
 app.get('/get-initial-status/:otherUserId', (req, res) =>{
-    console.log('app get initial status');
-    console.log('session id in Friendship status:', req.session.id)
-    console.log('req.params.id in Friendship status: ', req.params.otherUserId)
     db.friendship(req.session.id, req.params.otherUserId).then(
         data =>{
             console.log('data.rows in status: ', data.rows)
@@ -131,11 +118,9 @@ app.get('/get-initial-status/:otherUserId', (req, res) =>{
 })
 
 app.post('/get-friend/', (req, res) =>{
-    console.log('connected to get-friend');
     db.sendFriendRequest(req.session.id, req.body.id, req.body.status)
     .then(data =>{
         console.log('data.status.row: ', data.rows);
-        console.log('data.rows0.accepted in get-friend: ', data.rows[0].accepted);
            res.json(data.rows)
         }
     )
@@ -151,18 +136,12 @@ app.post('/lost-friend/', (req, res) =>{
 })
 
 app.post('/add-friend/', (req, res) =>{
-    console.log('app post route add friend');
-    console.log('status in add Friend route: ', req.body.status)
-    console.log('my id in add friend: ', req.session.id)
-    console.log('body ID in add friend: ', req.body.id)
-
     db.addFriend(req.session.id, req.body.id, req.body.status)
     .then(data =>{
         console.log('data.rows in add friend: ', data.rows);
         res.json(data.rows)
     })
 })
-
 
 // USER COMPONENT
 app.get('/user', isLoggedIn, (req, res) => {
@@ -176,10 +155,8 @@ app.get('/user', isLoggedIn, (req, res) => {
         })
     }); 
 
-// see other users profile    
+// OTHERPROFILE COMPONENT    
 app.get('/others/:id', isLoggedIn, (req, res) => {
-    console.log('session id: ', req.session.id)
-    console.log('params id: ', req.params.id)
     if(req.params.id != req.session.id)
         db.userInfo(req.params.id).then(({rows}) =>{
             if (!rows[0].picture){
@@ -191,13 +168,9 @@ app.get('/others/:id', isLoggedIn, (req, res) => {
         })
     }); 
 
-// UPDATE BIO
+// BIOEDITOR COMPONENT
 app.post('/bio', function(req, res){
-    console.log('anything from BioEditor');
-    console.log('id in update bio:', req.session);
-    console.log('body.bio: ', req.body.bio)
     db.updateBio(req.session.id, req.body.bio).then(data => {
-        console.log('req. textarea in app post bio: ', req.body.bio)
         console.log('data in bio: ', data)
         res.json(data.rows); 
         }).catch(err =>{
@@ -208,8 +181,7 @@ app.post('/bio', function(req, res){
 
 // UPLOAD
 app.post('/upload', uploader.single('file'),s3.upload, function(req, res) {
-    // If nothing went wrong the file is already in the uploads directory
-    console.log('Id:', req.session);
+
          var url= config.s3Url + req.file.filename;
 
         db.saveImage(req.session.id, url)
@@ -223,23 +195,17 @@ app.post('/upload', uploader.single('file'),s3.upload, function(req, res) {
 
 //REGISTER COMPONENT
 app.post('/register', function(req, res) {
-        console.log("req.body:",req.body);
-    // check the required fields
-    // IF all fields are filed out, send data to database (table users), hash the password and redirect them to petition
-    // database sends back the users ID as a cookie
         if (req.body.first && req.body.last && req.body.email && req.body.password){
             hashPassword(req.body.password).then(hashedPassword =>{
                 db.register(req.body.first, req.body.last, req.body.email,hashedPassword).then(data => {
-                    console.log('id: ', data.rows[0].id);
                     req.session.id = data.rows[0].id;
-                    console.log('session id: ', req.session.id);
                     req.session.first = req.body.first;
                     req.session.last = req.body.last;
                     req.session.email = req.body.email;
                     console.log('data =>: ', data);
                     res.json({success:true});
                 }).catch( err => {
-                    console.log ("app.post register: ", err);
+                    console.log (" err in post register: ", err);
                     res.json({success:false})
                 });
             })
@@ -250,18 +216,13 @@ app.post('/register', function(req, res) {
 
 app.post("/login", function(req, res){
     if(req.body.email && req.body.password){
-        console.log('body mail: ', req.body.email)
-        console.log('body:', req.body);
         db.checkLogin(req.body.email)
             .then(profileInfo =>{
                 if(profileInfo.rows[0]){
                     req.session.first = profileInfo.rows[0].first;
                     req.session.last = profileInfo.rows[0].last;
                     req.session.mail = profileInfo.rows[0].email;
-                    req.session.id = profileInfo.rows[0].id;
-                    console.log('print out profileInfo: ', profileInfo);
-                    console.log('req.body.password: ', req.body.password);
-                    console.log('profilInfo.rows: ', profileInfo.rows[0].password); 
+                    req.session.id = profileInfo.rows[0].id; 
                     db.checkPassword(req.body.password, profileInfo.rows[0].password)
                         .then(matchingPassword => {
                             if(matchingPassword == true){
@@ -299,7 +260,6 @@ app.get("/logout", function(req, res) {
 });
 
 
-
 // the last route
 app.get('*', function(req, res) {
     if (!req.session.id) {
@@ -312,7 +272,6 @@ app.get('*', function(req, res) {
 
 server.listen(8080, function() {
     console.log("I'm listening.");
-    //socket.emit('')
 });
 
 const onlineUsers = {};
