@@ -46,7 +46,7 @@ saveBio(e){
 
         return(
             <div>
-                <p>Your status / bio:</p>
+                <p>status / bio:</p>
                 <div className="biotext">
                     <div>{this.props.bio}</div>
                     <button className="edit" onClick={this.showEditor}>edit bio</button> 

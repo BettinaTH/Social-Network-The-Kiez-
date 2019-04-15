@@ -72,8 +72,8 @@ componentDidMount(){
                                 {this.state.uploaderIsVisible && <Uploader setPicture={this.setPicture} />}
                                 <div className="user-name">{this.state.first}</div>
                             </div>
-                            <a href="/friends"><button > FRIENDS </button></a>
-                            <a href="/online-users"><button > ONLINE </button></a>
+                            <a href="/friends"><button >  FRIENDS </button></a>
+                            <a href="/online-users"><button > ONLINE USER </button></a>
                         </div>
                     <div>    
                         <a href="/logout"><button > Back to the real KIEZ </button></a>

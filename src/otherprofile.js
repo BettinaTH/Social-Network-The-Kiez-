@@ -1,7 +1,5 @@
 import React from 'react';
 import axios from './axios';
-import ProfilePic from './profilepic';
-import BioEditor from './bioeditor';
 import Profile from './profile';
 import FriendButton from './friendbutton';
 
@@ -26,14 +24,17 @@ export default class OtherProfile extends React.Component {
     render() {
         return (
             <div>
-                <p>Get Friends with {this.state.first}</p>
-                <FriendButton
-                otherUserId={this.props.match.params.id}
-                myId={this.props.myId}/>
+                <div className="other-profile">
+                    <div className="profile-heading">This is the profile of {this.state.first}</div>
+                    <FriendButton
+                        otherUserId={this.props.match.params.id}
+                        myId={this.props.myId}
+                        />
+                </div>
                 <Profile
                     picture = {this.state.picture}
                     bio = {this.state.bio}
-                />
+                    />
             </div>
         );
     }

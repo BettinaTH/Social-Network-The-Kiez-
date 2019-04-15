@@ -15,9 +15,11 @@ componentDidMount(){
         const wannabes = this.props.wannabes;
         const myFriends = besties && besties.map((each)=>
         <div><h3>Your friends</h3>
-            <div key={each.id} className='friends'>
-                <img id='piclist' src={each.picture}></img>
-                <div className='eachName'>
+            <div key={each.id} className="friends">
+    
+                    <img id="piclist" src={each.picture}></img>
+         
+                <div className="eachName">
                     <div>{each.first}</div> <div>{each.last}</div>
                     <button onClick={() => this.props.dispatch(deleteFriendship(each.id))}>END FRIENDSHIP</button>
                 </div>
@@ -26,9 +28,9 @@ componentDidMount(){
             )
         const myWannabes = wannabes && wannabes.map((aspirant)=>
         <div><h3>Your friend requests</h3>
-            <div key={aspirant.id} className='friends'>
-                <img id='piclist' src={aspirant.picture}></img>
-                <div className='eachName'>
+            <div key={asirant.id} className="friends">
+                <img id="piclist" src={aspirant.picture}></img>
+                <div className="eachName">
                     <div>{aspirant.first}</div> <div>{aspirant.last}</div>
                     <button onClick={() => this.props.dispatch(newFriend(aspirant.id))}>ACCEPT FRIEND REQUEST</button>
                 </div>
@@ -37,11 +39,11 @@ componentDidMount(){
         )
         return(
             <div>
-                <div className='friends-container'>
-                    <div className='friendslist'>
+                <div className="friends-container">
+                    <div className="friendslist">
                         {myFriends}
                     </div>
-                    <div className='friendslist'>
+                    <div className="friendslist">
                         {myWannabes}
                     </div>
                 </div>

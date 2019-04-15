@@ -23,7 +23,6 @@ export default class Profile extends React.Component{
                         {this.props.uploaderIsVisible && <Uploader setPicture={props.setPicture} />}
                     </div>
                     <div className="container-col">
-                        <h4>Hi {this.props.first}, great your back.</h4>
                             <BioEditor
                                 bio={this.props.bio}
                                 setBio ={this.props.setBio}

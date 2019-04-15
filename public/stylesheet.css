@@ -128,6 +128,7 @@ height: 300px;
 #piclist{
     height:150px;
     width: 150px;
+    border-radius: 5px;
 }
 .friends{
     display: flex;
@@ -172,4 +173,12 @@ h2{
 .edit{
     width:80px;
     margin-top: 20px;
+}
+.other-profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profile-heading{
+    margin-right: 10px;
 }

@@ -5,7 +5,7 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server, { origins: 'localhost:8080' });
 
 const compression = require('compression');
-//// from petition
+
 //const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const csurf = require('csurf');
@@ -69,7 +69,7 @@ var uploader = multer({
 });
 //////////////////////////////////////////////////////
 
-/// Middleware to prevent not loggedIn users to go to the loggedIn Section
+// Middleware to prevent not loggedIn users to go to the loggedIn Section
 /*app.use(function (req, res, next){
     if (!req.session.id && req.url != '/welcome' && req.url != '/login'){
         res.redirect('/welcome');
@@ -113,7 +113,7 @@ app.get('/friendslist/', (req, res) =>{
     console.log()
 })
 
-/// COMPONENT FRIENDSBUTTON
+// COMPONENT FRIENDSBUTTON
 app.get('/get-initial-status/:otherUserId', (req, res) =>{
     console.log('app get initial status');
     console.log('session id in Friendship status:', req.session.id)
@@ -164,7 +164,7 @@ app.post('/add-friend/', (req, res) =>{
 })
 
 
-/// USER COMPONENT
+// USER COMPONENT
 app.get('/user', isLoggedIn, (req, res) => {
         db.userInfo(req.session.id).then(({rows}) =>{
             if (!rows[0].picture){
@@ -176,7 +176,7 @@ app.get('/user', isLoggedIn, (req, res) => {
         })
     }); 
 
-/// see other users profile    
+// see other users profile    
 app.get('/others/:id', isLoggedIn, (req, res) => {
     console.log('session id: ', req.session.id)
     console.log('params id: ', req.params.id)
