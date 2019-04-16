@@ -28,17 +28,16 @@ export default function reducer(state = {}, action){
     }
     if (action.type == 'ONLINE_USERS'){
         console.log('online user action:', action)
-        	state = Object.assign({}, state, {
-                online: action.online
-            })
-
+        state = Object.assign({}, state, {
+            online: action.online
+        });
     }
 
     if (action.type == 'USER_LEFT'){
         console.log('user left action:', action)
-        	state = Object.assign({}, state, {
-                online: state.online.filter( user => user.id != action.left)
-            })
+        state = Object.assign({}, state, {
+            online: state.online.filter( user => user.id != action.left)
+        });
 
     }
 
@@ -47,10 +46,9 @@ export default function reducer(state = {}, action){
         state = Object.assign({}, state, {
             online: state.online ? state.online.concat(action.joined) : [action.joined]
 
-        })
+        });
 
     }
-    // return new state object that contains a property
-    // called friendsWannabes whose value is the array we got back from the server
-    return state
+
+    return state;
 }

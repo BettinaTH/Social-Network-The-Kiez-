@@ -32,14 +32,14 @@ app.use(
 // cookie session with socket.io
 const cookieSession = require('cookie-session');
 const cookieSessionMiddleware = cookieSession({
-            secret: `I'm always angry.`,
-            maxAge: 1000 * 60 * 60 * 24 * 90
-        });
+    secret: `I'm always angry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 90
+});
 
-        app.use(cookieSessionMiddleware);
-        io.use(function(socket, next) {
-            cookieSessionMiddleware(socket.request, socket.request.res, next);
-        });
+app.use(cookieSessionMiddleware);
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(bodyParser.json());
 
@@ -88,131 +88,125 @@ if (process.env.NODE_ENV != 'production') {
     );
 } else {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
-};
+}
 
 
 // FRIENDSLIST
 app.get('/friendslist/', (req, res) =>{
-    console.log('get a list of friens route')
+    console.log('get a list of friens route');
     db.friends(req.session.id).then(
         data =>{
-            console.log('data.rows in friendslist: ', data.rows)
-            res.json({friendslist: data.rows})
-        }
-    )
-    console.log()
-})
+            console.log('data.rows in friendslist: ', data.rows);
+            res.json({friendslist: data.rows});
+        });
+});
 
 // COMPONENT FRIENDSBUTTON
 app.get('/get-initial-status/:otherUserId', (req, res) =>{
     db.friendship(req.session.id, req.params.otherUserId).then(
         data =>{
-            console.log('data.rows in status: ', data.rows)
             if(!data.rows){
                 res.json({});
             } else{
                 res.json(data.rows);
             }
-        }
-    )
-})
+        });
+});
 
 app.post('/get-friend/', (req, res) =>{
     db.sendFriendRequest(req.session.id, req.body.id, req.body.status)
-    .then(data =>{
-        console.log('data.status.row: ', data.rows);
-           res.json(data.rows)
-        }
-    )
-})
+        .then(data =>{
+            console.log('data.status.row: ', data.rows);
+            res.json(data.rows);
+        });
+});
 
 
 app.post('/lost-friend/', (req, res) =>{
     db.endFriendship(req.session.id, req.body.id)
-    console.log('data in lost friend: ', data.rows)
-    .then(data =>{
-        res.json(data.rows)
-    })
-})
+        .then(data =>{
+            res.json(data.rows);
+        });
+});
 
 app.post('/add-friend/', (req, res) =>{
     db.addFriend(req.session.id, req.body.id, req.body.status)
-    .then(data =>{
-        console.log('data.rows in add friend: ', data.rows);
-        res.json(data.rows)
-    })
-})
+        .then(data =>{
+            console.log('data.rows in add friend: ', data.rows);
+            res.json(data.rows);
+        });
+});
 
 // USER COMPONENT
 app.get('/user', isLoggedIn, (req, res) => {
-        db.userInfo(req.session.id).then(({rows}) =>{
-            if (!rows[0].picture){
-                rows[0].picture = '/default.png'
-            }
-            res.json(rows[0])
-        }).catch(err =>{
-            console.log('err in app get user: ', err)
-        })
-    }); 
+    db.userInfo(req.session.id).then(({rows}) =>{
+        if (!rows[0].picture){
+            rows[0].picture = '/default.png';
+        }
+        res.json(rows[0]);
+    }).catch(err =>{
+        console.log('err in app get user: ', err);
+    });
+}); 
 
 // OTHERPROFILE COMPONENT    
 app.get('/others/:id', isLoggedIn, (req, res) => {
     if(req.params.id != req.session.id)
         db.userInfo(req.params.id).then(({rows}) =>{
             if (!rows[0].picture){
-                rows[0].picture = '/default.png'
+                rows[0].picture = '/default.png';
             }
-            res.json(rows[0])
+            res.json(rows[0]);
         }).catch(err =>{
-            console.log('err in app get user: ', err)
-        })
-    }); 
+            console.log('err in app get user: ', err);
+        });
+}); 
 
 // BIOEDITOR COMPONENT
 app.post('/bio', function(req, res){
     db.updateBio(req.session.id, req.body.bio).then(data => {
-        console.log('data in bio: ', data)
+        console.log('data in bio: ', data);
         res.json(data.rows); 
-        }).catch(err =>{
-            console.log('err in update Bio:', err)
-        })
+    }).catch(err =>{
+        console.log('err in update Bio:', err);
+    });
 });
 
 
 // UPLOAD
 app.post('/upload', uploader.single('file'),s3.upload, function(req, res) {
 
-         var url= config.s3Url + req.file.filename;
+    var url= config.s3Url + req.file.filename;
 
-        db.saveImage(req.session.id, url)
-            .then(data => {
-                res.json(data.rows); 
-            }).catch(err =>{
-                console.log('err in db save Image: ', err);
-})
+    db.saveImage(req.session.id, url)
+        .then(data => {
+            res.json(data.rows); 
+        }).catch(err =>{
+            console.log('err in db save Image: ', err);
+        });
 });
 
 
 //REGISTER COMPONENT
 app.post('/register', function(req, res) {
-        if (req.body.first && req.body.last && req.body.email && req.body.password){
-            hashPassword(req.body.password).then(hashedPassword =>{
-                db.register(req.body.first, req.body.last, req.body.email,hashedPassword).then(data => {
-                    req.session.id = data.rows[0].id;
-                    req.session.first = req.body.first;
-                    req.session.last = req.body.last;
-                    req.session.email = req.body.email;
-                    console.log('data =>: ', data);
-                    res.json({success:true});
-                }).catch( err => {
-                    console.log (" err in post register: ", err);
-                    res.json({success:false})
-                });
-            })
-            } else {
+    if (req.body.first && req.body.last && req.body.email && req.body.password){
+        hashPassword(req.body.password).then(hashedPassword =>{
+            db.register(req.body.first, req.body.last, req.body.email,hashedPassword).then(data => {
+                req.session.id = data.rows[0].id;
+                req.session.first = req.body.first;
+                req.session.last = req.body.last;
+                req.session.email = req.body.email;
+                console.log('data =>: ', data);
+                res.json({success:true});
+            }).catch( err => {
+                console.log (" err in post register: ", err);
                 res.json({success:false});
-            }
-})
+            });
+        });
+    } else {
+        res.json({success:false});
+    }
+});
 
 app.post("/login", function(req, res){
     if(req.body.email && req.body.password){
@@ -251,7 +245,7 @@ app.get('/welcome', function(req, res) {
     } else {
         res.sendFile(__dirname + '/index.html');
     }
-})
+});
 
 // LOGOUT
 app.get("/logout", function(req, res) {
@@ -291,28 +285,28 @@ io.on('connection', socket =>{
         ({rows}) =>{
             socket.emit('onlineUsers', {
                 onlineUsers: rows
-            })
-            console.log('rows in socket onlineusers: ', rows)
+            });
+            console.log('rows in socket onlineusers: ', rows);
         }
-    )
+    );
     const alreadyHere = Object.values(onlineUsers)
         .filter(onlineId => {
             return onlineId == id;
         }).length > 1;
     if (!alreadyHere){
         db.userInfo(id).then(({rows}) => {
-                socket.broadcast.emit('userJoined' , {
-                    onlineUser: rows[0]
-                }); 
-                console.log('rows in user joined: ', rows[0]);
-            })
-        }
+            socket.broadcast.emit('userJoined' , {
+                onlineUser: rows[0]
+            }); 
+            console.log('rows in user joined: ', rows[0]);
+        });
+    }
     
     socket.on('disconnect', () =>{
         delete onlineUsers[socket.id];
         if(!Object.values(onlineUsers).includes(id)){
             socket.broadcast.emit('userLeft', id);
         }
-    })
+    });
 
-})
+});
