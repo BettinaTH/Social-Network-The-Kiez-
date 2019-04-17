@@ -11,9 +11,6 @@ export default class Registration extends React.Component {
     }
     handleChange(e) {
         this[e.target.name] = e.target.value;
-        // this.setState({
-        //     [e.target.name]: e.target.value
-        // });
     }
     submit(e) {
         axios.post('/register', {
@@ -33,7 +30,7 @@ export default class Registration extends React.Component {
     }
     render() {
         return (
-            <div className = "registration">
+            <div className="registration">
                     {this.state.error && <div className="error">Oops!</div>}
                 <input name="first"  placeholder="first" onChange={this.handleChange} />
                 <input name="last" placeholder="last" onChange={this.handleChange}/>

@@ -7,10 +7,6 @@ export default class Uploader extends React.Component{
         this.state={};
         };
 
-// proflepic does not appears directly to react then(({data}) => {
-        // console.log('save Bio:', data);
-        // this.props.setBio(data[0].bio);
-        // });
     render (){
         return(
             <div>

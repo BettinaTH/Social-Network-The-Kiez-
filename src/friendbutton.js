@@ -11,11 +11,6 @@ constructor(){
 
 componentDidMount(){
     axios.get('/get-initial-status/' + this.props.otherUserId).then(data =>{
-        console.log('othersUserId: ', this.props.otherUserId)
-        console.log('my Id in friends button: ', this.props.myId)
-        console.log('data 2:', data.data);
-        //console.log('data 1.1: ', data.data[0].accepted); // prints out pending or yes
-        console.log('data.data.length:' , data.data.length); // prints out 0 or 1
         if(data.data.length === 0){
             this.setState({buttonText: 'SEND FRIENDSHIP REQUEST'})
         } if (data.data.length >= 1){ 
@@ -35,9 +30,6 @@ componentDidMount(){
     )}
 
     changeStatus(){ 
-        console.log('change Status running');
-        console.log('myId in change status: ', this.props.myId);
-        console.log('otherId in change status: ', this.props.otherUserId);
             if(this.state.buttonText == 'SEND FRIENDSHIP REQUEST'){
                 axios.post('/get-friend/', {id: this.props.otherUserId, status:'pending'})
                 .then(data =>{
@@ -63,7 +55,6 @@ componentDidMount(){
                     })
                 })
              } else if(this.state.buttonText == 'ACCEPT FRIEND REQUEST'){
-                console.log('accept friend request axios post')
                 axios.post('/add-friend/', {id: this.props.otherUserId, status:'yes'})
                 .then(data =>{
                     console.log('data in change add Friend: ', data);

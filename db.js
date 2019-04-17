@@ -33,7 +33,7 @@ module.exports.endFriendship = function endFriendship(myId, othersUserID){
 };
 // REQUEST A FRIEND
 module.exports.sendFriendRequest = function sendFriendRequest(myId, othersUserID, status){
-        return db.query('INSERT INTO friendships (sender, receiver, accepted) VALUES ($1, $2, $3) RETURNING *', [myId, othersUserID, status]);
+    return db.query('INSERT INTO friendships (sender, receiver, accepted) VALUES ($1, $2, $3) RETURNING *', [myId, othersUserID, status]);
 };
 
 // ADD A FRIEND
@@ -47,11 +47,11 @@ module.exports.register = function register(first, last, email, password){
 };
 
 
-// checkin FROM PETITION
+// CHECKIN
 module.exports.checkLogin = function checkLogin(email){
     return db.query('SELECT id, first, last, email, password FROM users WHERE email=$1', [email]);
 };
-// check Password FROM PETITION
+// CHECK PASSWORD
 module.exports.checkPassword = function checkPassword(textEnteredInLoginForm, hashedPasswordFromDatabase) {
     return new Promise(function(resolve, reject) {
         bcrypt.compare(textEnteredInLoginForm, hashedPasswordFromDatabase, function(err, doesMatch) {
@@ -70,12 +70,12 @@ module.exports.userInfo = function showFullProfile (id){
     return db.query('SELECT id, first, last, picture, bio FROM users WHERE users.id=$1', [id]);
 };
 
-// Safe new picture
+// SAFE NEW PICTURE
 module.exports.saveImage = function saveImage(id, url){
     return db.query(`UPDATE users SET picture = $2 WHERE id=$1`, [id, url]);};
 
 
-// update BIo
+// UPDATE BIO
 module.exports.updateBio = function updateBio (id, bio){
     return db.query('UPDATE users SET bio = $2  WHERE id =$1 RETURNING bio' ,[ id, bio]);
 };

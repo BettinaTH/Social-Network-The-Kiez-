@@ -9,7 +9,7 @@ export function getSocket(store){
         socket.on('onlineUsers', data =>{
             store.dispatch(
                 onlineUsers(data.onlineUsers)
-            )   
+            );   
         });
         socket.on('userJoined', data =>{
             store.dispatch(
@@ -20,7 +20,7 @@ export function getSocket(store){
         socket.on('userLeft', data =>{
             store.dispatch(
                 userLeft(data)
-                )
+            );
         });
     }
 
